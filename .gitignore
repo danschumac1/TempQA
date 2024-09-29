@@ -1,0 +1,15 @@
+token.txt
+models/*
+!models/.gitkeep
+drive_credentials.json
+drive_token.json
+data/datasets/*
+!data/datasets/.gitkeep
+data/generations/*
+!data/generations/.gitkeep
+bin/OLD/
+wandb/
+logs/
+!logs/.gitkeep
+token.txt
+src/utils/__pycache__/
