@@ -1,0 +1,25 @@
+model	dataset	trained_on	eval_on	f1	acc	timestamp
+gemma	MenatQA	mixed_context	scope_test_relevant_context	0.196310075603668	0.38392857142857145	2024-09-23 15:16:02
+gemma	MenatQA	mixed_context	scope_expand_test_random_context	0.046152279649940085	0.03977272727272727	2024-09-23 15:16:05
+gemma	MenatQA	mixed_context	scope_test_wrong_date_context	0.11548690280307927	0.16964285714285715	2024-09-23 15:16:11
+gemma	MenatQA	mixed_context	order_test_relevant_context	0.22245243571792397	0.45054945054945056	2024-09-23 15:16:14
+gemma	MenatQA	mixed_context	counterfactual_test_relevant_context	0.28523406326093176	0.625	2024-09-23 15:16:17
+gemma	MenatQA	mixed_context	order_test_random_context	0.1733217118279037	0.35714285714285715	2024-09-23 15:16:20
+gemma	MenatQA	mixed_context	order_test_wrong_date_context	0.21742137631550065	0.44505494505494503	2024-09-23 15:16:26
+gemma	MenatQA	mixed_context	scope_expand_test_wrong_date_context	0.12294615941841873	0.2159090909090909	2024-09-23 15:16:29
+gemma	MenatQA	mixed_context	scope_expand_test_relevant_context	0.16223271253131571	0.26704545454545453	2024-09-23 15:16:32
+gemma	MenatQA	mixed_context	scope_test_random_context	0.0500938250254095	0.03571428571428571	2024-09-23 15:16:38
+gemma	MenatQA	mixed_context	counterfactual_test_random_context	0.2807013804325556	0.6339285714285714	2024-09-23 15:16:44
+gemma	MenatQA	mixed_context	counterfactual_test_wrong_date_context	0.2922838791080166	0.6339285714285714	2024-09-23 15:16:47
+gemma	MenatQA	relevant_context	scope_test_relevant_context	0.21385848290978754	0.4017857142857143	2024-09-23 15:16:50
+gemma	MenatQA	relevant_context	scope_expand_test_random_context	0.05077318793060772	0.03977272727272727	2024-09-23 15:16:53
+gemma	MenatQA	relevant_context	scope_test_wrong_date_context	0.11077846931313318	0.19642857142857142	2024-09-23 15:16:59
+gemma	MenatQA	relevant_context	order_test_relevant_context	0.2307056438554584	0.45604395604395603	2024-09-23 15:17:02
+gemma	MenatQA	relevant_context	counterfactual_test_relevant_context	0.28444699581157434	0.625	2024-09-23 15:17:05
+gemma	MenatQA	relevant_context	order_test_random_context	0.16153063699928588	0.3516483516483517	2024-09-23 15:17:08
+gemma	MenatQA	relevant_context	order_test_wrong_date_context	0.21808429075507962	0.45054945054945056	2024-09-23 15:17:14
+gemma	MenatQA	relevant_context	scope_expand_test_wrong_date_context	0.13567341749159922	0.21022727272727273	2024-09-23 15:17:17
+gemma	MenatQA	relevant_context	scope_expand_test_relevant_context	0.17128346477224174	0.2897727272727273	2024-09-23 15:17:20
+gemma	MenatQA	relevant_context	scope_test_random_context	0.047336408339559606	0.05357142857142857	2024-09-23 15:17:26
+gemma	MenatQA	relevant_context	counterfactual_test_random_context	0.24951129804762034	0.5982142857142857	2024-09-23 15:17:32
+gemma	MenatQA	relevant_context	counterfactual_test_wrong_date_context	0.27763673091307417	0.6160714285714286	2024-09-23 15:17:35

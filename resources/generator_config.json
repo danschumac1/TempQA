@@ -1,0 +1,21 @@
+{
+  "gemma": {
+    "max_new_tokens": 16,
+    "do_sample": true,
+    "temperature": 1.9,
+    "top_p": 0.1,
+    "length_penalty": 1.0
+  },
+  "mistral": {
+    "max_new_tokens": 16,
+    "do_sample": true,
+    "temperature": 1.9,
+    "top_p": 0.1
+  },
+  "llama": {
+    "max_new_tokens": 16,
+    "do_sample": true,
+    "temperature": 1.9,
+    "top_p": 0.1
+  }
+}

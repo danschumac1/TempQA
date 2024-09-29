@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "disable_existing_loggers": false,
+  "formatters": {
+    "detailed": {
+      "format": "[%(levelname)s|%(module)s|L%(lineno)d] %(asctime)s: %(message)s",
+      "datefmt": "%Y-%m-%dT%H:%M:%S%z"
+    }
+  },
+  "handlers": {
+    "trainer_file": {
+      "class": "logging.handlers.RotatingFileHandler",
+      "level": "DEBUG",
+      "formatter": "detailed",
+      "filename": "logs/trainer.log",
+      "maxBytes": 1000000,
+      "backupCount": 3
+    },
+    "generation_file": {
+      "class": "logging.handlers.RotatingFileHandler",
+      "level": "DEBUG",
+      "formatter": "detailed",
+      "filename": "logs/generations.log",
+      "maxBytes": 1000000,
+      "backupCount": 3
+    },
+    "evaluation_file": {
+      "class": "logging.handlers.RotatingFileHandler",
+      "level": "DEBUG",
+      "formatter": "detailed",
+      "filename": "logs/eval.log",
+      "maxBytes": 1000000,
+      "backupCount": 3
+    }
+  },
+  "loggers": {
+    "trainer_logger": {
+      "level": "DEBUG",
+      "handlers": [
+        "trainer_file"
+      ],
+      "propagate": false
+    },
+    "generation_logger": {
+      "level": "DEBUG",
+      "handlers": [
+        "generation_file"
+      ],
+      "propagate": false
+    },
+    "evaluation_logger": {
+      "level": "DEBUG",
+      "handlers": [
+        "evaluation_file"
+      ],
+      "propagate": false
+    }
+  }
+}

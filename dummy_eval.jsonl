@@ -1,0 +1,2 @@
+{"model": "dummy", "trained_on": "mixed_context", "eval_on": "wrong_date_context", "f1": 1.0, "acc": 1.0}
+{"model": "dummy", "trained_on": "mixed_context", "eval_on": "wrong_date_context", "f1": 1.0, "acc": 1.0}
