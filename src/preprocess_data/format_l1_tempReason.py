@@ -4,11 +4,15 @@ Created on 09/15/2024
 @author: Dan Schumacher
 
 # How to run this script:
-#python src/format_l1_tempReason.py
+src/preprocess_data/format_l1_tempReason.py
+python ./src/preprocess_data/format_l1_tempReason.py
 
 """
 
 import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+
 import pandas as pd
 from utils.format_data_utils import temp_reason_basic_processing, assign_mixed_context
 
@@ -19,7 +23,7 @@ def main():
         'test_l1': './data/datasets/TempReason/original/test_l1.json'
     }
 
-    output_dir = './data/datasets/TempReason/final'
+    output_dir = './data/datasets/TR_l1/final'
 
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
@@ -35,7 +39,7 @@ def main():
         train_dev_test = name.split('_')[0]
 
         # Load the corresponding context dataset
-        context_path = path.split('original')[0] + f'final/{train_dev_test}_l2.jsonl'
+        context_path = f'./data/datasets/TempReason/final/{train_dev_test}_l2.jsonl'       
         context_df = pd.read_json(context_path, lines=True)
 
         # Get lengths of the dfs
