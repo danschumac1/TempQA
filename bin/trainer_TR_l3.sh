@@ -1,6 +1,6 @@
 #!/bin/bash
 # nohup ./bin/trainer_TR_l3.sh &
-#region MIXED CONTEXT
+# region MIXED CONTEXT
 dataset="TR_l3"
 model='gemma'
 training_context='mixed_context'
@@ -15,7 +15,7 @@ log="logs/trainer_errors_gpu${gpu}.log"
 touch $log
 
 # Run the training script and redirect only errors to trainer_errors.log
-CUDA_VISIBLE_DEVICES=0 nohup python src/dynamic_trainer.py \
+CUDA_VISIBLE_DEVICES=$gpu nohup python src/dynamic_trainer.py \
     --model_type $model \
     --train_file_path $train_path \
     --dev_file_path $dev_path \
@@ -26,8 +26,8 @@ CUDA_VISIBLE_DEVICES=0 nohup python src/dynamic_trainer.py \
     --epochs 6 2>>$log &
 
 echo "Training Script Complete on gpu${gpu}!!!\n">>$log
-#endregion
-#region RELEVANT CONTEXT
+# endregion
+# region RELEVANT CONTEXT
 training_context='relevant_context'
 save_path="./models/${model}/${dataset}/${training_context}_trained"
 gpu=1

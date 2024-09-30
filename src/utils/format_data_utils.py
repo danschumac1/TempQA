@@ -56,7 +56,7 @@ def temp_reason_get_answer(row:pd.Series) -> str:
 
 def temp_reason_basic_processing(df:pd.DataFrame) -> pd.DataFrame:   
     # get the answer from the text_answers field
-    df['answers'] = df.apply(temp_reason_get_answer, axis=1)
+    df['answer'] = df.apply(temp_reason_get_answer, axis=1)
     # rename the fact_context field to relevant_context
     if 'fact_context' in df.columns:
         df['relevant_context'] = df['fact_context']

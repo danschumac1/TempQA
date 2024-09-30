@@ -15,7 +15,7 @@ log="logs/trainer_errors_gpu${gpu}.log"
 touch $log
 
 # Run the training script and redirect only errors to trainer_errors.log
-CUDA_VISIBLE_DEVICES=0 nohup python src/dynamic_trainer.py \
+CUDA_VISIBLE_DEVICES=$gpu nohup python src/dynamic_trainer.py \
     --model_type $model \
     --train_file_path $train_path \
     --dev_file_path $dev_path \
