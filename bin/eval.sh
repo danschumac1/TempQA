@@ -9,7 +9,7 @@ dataset="MenatQA"
 model="gemma"
 
 # Define the directories
-generations_dir="./data/generations/${model}/${dataset}/mixed_context_STACKED_trained"
+generations_dir="./data/generations/${model}/${dataset}/mixed_context_trained"
 test_dir="./data/datasets/${dataset}/final"
 
 # Clear or create results file

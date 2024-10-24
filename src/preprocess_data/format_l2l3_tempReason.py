@@ -20,6 +20,7 @@ from utils.format_data_utils import generate_wd_context, temp_reason_basic_proce
 def process_dataset(df: pd.DataFrame, num_workers: int) -> pd.DataFrame:
     """Process a single dataset by generating contexts and extracting relevant fields."""
     df = temp_reason_basic_processing(df)
+    df['no_context'] = ''
     df = generate_random_context_TimeQA(df)
     generate_wd_context(df, num_workers)
     assign_mixed_context(df)

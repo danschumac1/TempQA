@@ -104,6 +104,7 @@ if __name__ == "__main__":
     # Example: Counting the number of rows for each type
     num_workers = cpu_count()
     for split, df in final_dataframes.items():
+        df['no_context'] = ''
         generate_random_context_Menat(df)
         generate_wd_context(df,num_workers)
         assign_mixed_context(df)

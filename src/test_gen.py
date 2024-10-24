@@ -4,12 +4,12 @@ Created on 06/09/2024
 @author: Dan Schumacher
 
 HOW TO RUN
-python ./src/test_gen.py \
-    --dataset_folder './data/datasets/MenatQA/final' \
-    --test_file 'test.jsonl' \
-    --dataset MenatQA \
+CUDA_VISIBLE_DEVICES=1 python ./src/test_gen.py \
+    --dataset_folder './data/datasets/TimeQAEasy/final' \
+    --test_file 'test_easy.jsonl' \
+    --dataset TimeQAEasy \
     --eval_context relevant_context \
-    --model_path 'models/gemma/MenatQA/mixed_context_trained' \
+    --model_path 'models/gemma/TimeQAEasy/relevant_context_trained' \
     --model gemma> dummy_generations.jsonl
 """
 
@@ -38,13 +38,13 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Temporal Understanding in LLMs Training Script")
     parser.add_argument('--dataset_folder', type=str, required=True, help='Where do the train/dev files live?')
     parser.add_argument('--test_file', type=str, required=True, help='What is the train file name?')
-    parser.add_argument('--dataset', type=str, required=True, choices=['dummy','AQA','TQE', 'MenatQA','TimeQA','TempReason'], help='Select the dataset to use')
+    parser.add_argument('--dataset', type=str, required=True,  help='Select the dataset to use')
     parser.add_argument('--eval_context', type=str, required=True, choices=['no_context','random_context','relevant_context','wrong_date_context','mixed_context'], help='Select context to evaluate')
     parser.add_argument('--model_path', type=str, required=True, help='Path to the saved model')
     parser.add_argument('--model', type=str, required=True, choices=['gemma','mistral','llama'], help='What model (for grabbing generation configs)')
 
     # OPTIONAL ARGUMENTS
-    parser.add_argument('--batch_size', type=int, required=False, default=16, help='Batch size for model inference')
+    parser.add_argument('--batch_size', type=int, required=False, default=2, help='Batch size for model inference')
     parser.add_argument('--data_file', type=str, required=False, default='test.jsonl', help='Name of the data file to evaluate')
     return parser.parse_args()
 
@@ -73,7 +73,7 @@ def main():
         sys.exit(1)
     
     # Load the dataset from file
-    test = pd.read_json(file_path, lines=True).iloc[:20] # this is what is different
+    test = pd.read_json(file_path, lines=True).iloc[:4] # this is what is different
     
     # Set up the format function for prompts
     format_function = get_format_function(args.model)

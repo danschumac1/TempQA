@@ -21,7 +21,7 @@ CUDA_VISIBLE_DEVICES=$gpu nohup python src/dynamic_trainer.py \
     --dev_file_path $dev_path \
     --save_path $save_path \
     --training_context $training_context \
-    --batch_size 16 \
+    --batch_size 4 \
     --lr 2e-5 \
     --epochs 6 2>>$log &
 

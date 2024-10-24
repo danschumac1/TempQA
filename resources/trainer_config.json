@@ -5,7 +5,7 @@
       "lora_config": {
         "r": 16,
         "lora_alpha": 32,
-        "target_modules": ["o_proj", "q_proj", "up_proj", "v_proj", "k_proj", "down_proj", "gate_proj"],
+        "target_modules": "all-linear",
         "lora_dropout": 0.05,
         "bias": "none",
         "task_type": "CAUSAL_LM",

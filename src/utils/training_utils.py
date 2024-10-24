@@ -26,11 +26,11 @@ def gemma_trainer_formatter(df: pd.DataFrame, context_type: str) -> list:
         # Format prompt based on context type
         if context_type == 'no_context' or context == '':
             # prompt = f'''<bos><start_of_turn>user\nAnswer the question:\nQuestion: {question}<end_of_turn>\n<start_of_turn>model\nThe answer is: {answer}<end_of_turn><eos>'''
-            prompt = f'''<bos><start_of_turn>user\nAnswer the question:\nQuestion: {question}<end_of_turn>\n<start_of_turn>model\nThe answer is: {answer}<end_of_turn><eos>'''
+            prompt = f'''<bos><start_of_turn>user\nIn as few words as possible, answer the following question given the context.\nQuestion: {question}\nContext: None<end_of_turn>\n<start_of_turn>model\nThe answer is {answer}<end_of_turn><eos>'''
 
         else:
             # prompt = f'''<bos><start_of_turn>user\nAnswer the question given the context:\nQuestion: {question}\nContext: {context}<end_of_turn>\n<start_of_turn>model\nThe answer is: {answer}<end_of_turn><eos>'''
-            prompt = f'''<bos><start_of_turn>user\nAnswer the question given the context:\nQuestion: {question}\nContext: {context}<end_of_turn>\n<start_of_turn>model\nThe answer is: {answer}<end_of_turn><eos>'''
+            prompt = f'''<bos><start_of_turn>user\nIn as few words as possible, answer the following question given the context.\nQuestion: {question}\nContext: {context}<end_of_turn>\n<start_of_turn>model\nThe answer is {answer}<end_of_turn><eos>'''
 
         prompts.append(prompt)
     

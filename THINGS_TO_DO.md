@@ -17,3 +17,6 @@
         - I don't know where the original files are
         - I don't know where my original processing code is
         - This repo needs to be reproducible. 
+
+
+ #["o_proj", "q_proj", "up_proj", "v_proj", "k_proj", "down_proj", "gate_proj"],

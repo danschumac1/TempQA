@@ -55,6 +55,7 @@ def main():
             context_df_extended = context_df
 
         # Add the extended context columns to the main df
+        df['no_context'] = ''
         df['relevant_context'] = context_df_extended['relevant_context']
         df['random_context'] = context_df_extended['random_context']
         df['wrong_date_context'] = context_df_extended['wrong_date_context']

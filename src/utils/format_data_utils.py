@@ -83,14 +83,13 @@ def assign_mixed_context(df: pd.DataFrame, random_seed: int = 42):
     random_seed (int): Seed for the random generator. Default is 42.
     """
     random.seed(random_seed)
-    df['no_context'] = ''  # Add no_context column as blank initially
     options = ['no_context', 'relevant_context', 'random_context', 'wrong_date_context']
 
     # Create 'mixed_context' column by directly modifying the DataFrame using .loc[]
     df['mixed_context'] = df.apply(lambda row: row[random.choice(options)], axis=1)
 
     # Drop the no_context column after use
-    df.drop(columns=['no_context'], inplace=True)
+    # df.drop(columns=['no_context'], inplace=True)
 
 # Predefined list of full months and their abbreviations
 MONTHS_FULL = ["January", "February", "March", "April", "May", "June",

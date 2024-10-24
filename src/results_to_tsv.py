@@ -1,9 +1,16 @@
+"""
+Created on 10/17/2024
+
+@author: Dan
+To Run: 
+python ./src/results_to_tsv.py --input_file ./data/results/results.jsonl
+"""
 import json
 import argparse
 
 def convert_jsonl_to_tsv(jsonl_data):
     # Prepare header for TSV
-    header = ["model", "dataset", "trained_on", "eval_on", "f1", "acc", "timestamp"]
+    header = ["model", "dataset", "trained_on", "eval_test_set", "eval_context", "f1", "acc", "timestamp"]
 
     # Prepare output list for TSV
     tsv_output = []
@@ -38,4 +45,6 @@ if __name__ == "__main__":
 
     # Convert and print the TSV result
     tsv_result = convert_jsonl_to_tsv(jsonl_data)
-    print(tsv_result)
+    # export
+    with open("./data/results/results.tsv", 'w') as f:
+        f.write(tsv_result)

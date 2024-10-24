@@ -39,6 +39,9 @@ def preprocess_data(file_path):
 
     df['split'] = split_name
     
+    # Assign no context
+    df['no_context'] = ''
+
     # Generate random contexts
     generate_random_context_TimeQA(df) 
 
