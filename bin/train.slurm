@@ -9,4 +9,4 @@
 module load anaconda3
 conda activate ArcTempQA
 
-time bash trainer_Menat.sh  
+time bash trainer_TR_l2.sh  
