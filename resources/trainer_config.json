@@ -26,7 +26,7 @@
     },
     "llama": {
       "base_model": "huggingface/llama-7b",
-      "formatter": "llama",
+      "formatter": "LLAMA BLAH",
       "lora_config": {
         "r": 8,
         "lora_alpha": 64,

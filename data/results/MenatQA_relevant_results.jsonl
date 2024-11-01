@@ -1,0 +1,34 @@
+soviet union or russia since he held both positions at different times during that period ['russian']
+risultati soviet union if it were not for a lack of information ['russian']
+
+{"model": "gemma", "dataset": "MenatQA", "trained_on": "relevant_context", "eval_test_set": "scope_test", "eval_context": "relevant_context", "f1": 0.07929377167780483, "acc": 0.08928571428571429, "timestamp": "2024-10-28 13:54:41"}
+
+{"model": "gemma", "dataset": "MenatQA", "trained_on": "relevant_context", "eval_test_set": "scope_expand_test", "eval_context": "random_context", "f1": 0.030747264226454348, "acc": 0.05113636363636364, "timestamp": "2024-10-28 13:54:43"}
+
+{"model": "gemma", "dataset": "MenatQA", "trained_on": "relevant_context", "eval_test_set": "scope_test", "eval_context": "no_context", "f1": 0.06256144564622562, "acc": 0.0625, "timestamp": "2024-10-28 13:54:44"}
+
+{"model": "gemma", "dataset": "MenatQA", "trained_on": "relevant_context", "eval_test_set": "scope_test", "eval_context": "wrong_date_context", "f1": 0.055396023119099205, "acc": 0.08035714285714286, "timestamp": "2024-10-28 13:54:46"}
+
+{"model": "gemma", "dataset": "MenatQA", "trained_on": "relevant_context", "eval_test_set": "order_test", "eval_context": "relevant_context", "f1": 0.0693383814743492, "acc": 0.08241758241758242, "timestamp": "2024-10-28 13:54:48"}
+
+{"model": "gemma", "dataset": "MenatQA", "trained_on": "relevant_context", "eval_test_set": "counterfactual_test", "eval_context": "relevant_context", "f1": 0.0825699714617782, "acc": 0.13392857142857142, "timestamp": "2024-10-28 13:54:50"}
+
+{"model": "gemma", "dataset": "MenatQA", "trained_on": "relevant_context", "eval_test_set": "order_test", "eval_context": "random_context", "f1": 0.048097440518255014, "acc": 0.08791208791208792, "timestamp": "2024-10-28 13:54:52"}
+
+{"model": "gemma", "dataset": "MenatQA", "trained_on": "relevant_context", "eval_test_set": "order_test", "eval_context": "no_context", "f1": 0.03978756215640849, "acc": 0.038461538461538464, "timestamp": "2024-10-28 13:54:53"}
+
+{"model": "gemma", "dataset": "MenatQA", "trained_on": "relevant_context", "eval_test_set": "order_test", "eval_context": "wrong_date_context", "f1": 0.05386090692328571, "acc": 0.06593406593406594, "timestamp": "2024-10-28 13:54:55"}
+
+{"model": "gemma", "dataset": "MenatQA", "trained_on": "relevant_context", "eval_test_set": "scope_expand_test", "eval_context": "wrong_date_context", "f1": 0.036685328003844046, "acc": 0.06818181818181818, "timestamp": "2024-10-28 13:54:57"}
+
+{"model": "gemma", "dataset": "MenatQA", "trained_on": "relevant_context", "eval_test_set": "scope_expand_test", "eval_context": "relevant_context", "f1": 0.03788458830236905, "acc": 0.05113636363636364, "timestamp": "2024-10-28 13:54:59"}
+
+{"model": "gemma", "dataset": "MenatQA", "trained_on": "relevant_context", "eval_test_set": "scope_expand_test", "eval_context": "no_context", "f1": 0.03433707553157666, "acc": 0.028409090909090908, "timestamp": "2024-10-28 13:55:00"}
+
+{"model": "gemma", "dataset": "MenatQA", "trained_on": "relevant_context", "eval_test_set": "scope_test", "eval_context": "random_context", "f1": 0.03491345742382341, "acc": 0.0625, "timestamp": "2024-10-28 13:55:02"}
+
+{"model": "gemma", "dataset": "MenatQA", "trained_on": "relevant_context", "eval_test_set": "counterfactual_test", "eval_context": "no_context", "f1": 0.04124429162230466, "acc": 0.044642857142857144, "timestamp": "2024-10-28 13:55:04"}
+
+{"model": "gemma", "dataset": "MenatQA", "trained_on": "relevant_context", "eval_test_set": "counterfactual_test", "eval_context": "random_context", "f1": 0.06556481628352483, "acc": 0.11607142857142858, "timestamp": "2024-10-28 13:55:06"}
+
+{"model": "gemma", "dataset": "MenatQA", "trained_on": "relevant_context", "eval_test_set": "counterfactual_test", "eval_context": "wrong_date_context", "f1": 0.07755509462096706, "acc": 0.10714285714285714, "timestamp": "2024-10-28 13:55:07"}

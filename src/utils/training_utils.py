@@ -52,20 +52,20 @@ def make_tokenized_prompt_column(df:pd.DataFrame, tokenizer:AutoTokenizer, conte
     dataset = dataset.shuffle(seed=1234)
     return dataset
 
-def load_config(json_path, model_type):
+def load_config(json_path, config_type):
     """
     Load model-specific configuration from a JSON file.
     
     Args:
         json_path (str): The path to the JSON configuration file.
-        model_type (str): The model type to load (e.g., 'gemma', 'mistral', 'llama').
+        config_type (str): The model type to load (e.g., 'gemma', 'mistral', 'llama').
 
     Returns:
         dict: A dictionary containing the configuration for the specified model type.
     """
     with open(json_path, 'r') as file:
         config = json.load(file)
-    return config[model_type]
+    return config[config_type]
     
 def get_trainer(model, tokenizer, train_dataset, dev_dataset, config, epoch, lr, batch_size, save_path):
     """

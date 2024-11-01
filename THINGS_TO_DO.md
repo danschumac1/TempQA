@@ -1,18 +1,21 @@
 # Things To Do
-1. incorporate wandb
-2. change the training code
-    - F1 / Acc (instead of loss) on Dev
-    - After each epoch
+- Choose generation parameters
+    - MenatQA Mixed trained
+    - MenatQA Relevant trained
+    or
+    - MenatQA Mixed trained rel eval
+    - MenatQA Mixed trained rand eval
+    - MenatQA Mixed trained no eval
+    - MenatQA Mixed trained wd eval
+
+
+- incorporate wandb
     
-3. move trainer functions to utils.
-    - make a trainer_selecter function
+- move trainer functions to utils.
     - make a trainer func for Mistral / Llama etc.
 
-4. get rid of googl/
-5. update CLA so they are specific to Gemma.
-6. RUN Expirements. 
 
-7. ** remake the AQA and TQE datasets
+- **remake the AQA and TQE datasets**
     Why? Because...
         - I don't know where the original files are
         - I don't know where my original processing code is

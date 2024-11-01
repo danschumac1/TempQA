@@ -2,8 +2,6 @@ import string
 import json
 from typing import List
 from utils.gen_utils import preprocess_text
-
-
 import pandas as pd
 
 def load_funky_json(file_path):
@@ -40,15 +38,12 @@ def extract_generations(gen_list: List[dict], key_name:str = 'OUTPUT') -> list:
         Exception: If an error occurs while extracting the generations.
 
     """
-    errors = []
     cleaned_list = []
     for gen in gen_list:
-        try:
-            cleaned_list.append(preprocess_text(gen[key_name].split('The answer is: ')[1]))
-        except Exception as e:
-            cleaned_list.append('')
-            errors.append(e)
-    return cleaned_list, errors
+        cleaned_list.append(preprocess_text(gen[key_name].split('he answer is ')[1]))
+        # cleaned_list.append(gen[key_name].split('he answer is ')[1])
+
+    return cleaned_list
 
 def extract_actual_answers(actual_df: pd.DataFrame, answer_key: str = 'answer') -> List[List[str]]:
     """
@@ -66,8 +61,12 @@ def extract_actual_answers(actual_df: pd.DataFrame, answer_key: str = 'answer') 
     for answer in actual_df[answer_key]:
         if isinstance(answer, list):  # Check if it's a list
             cleaned_answers_lists.append([preprocess_text(ans) for ans in answer])  # Preprocess each answer and wrap in a list
+            # cleaned_answers_lists.append([ans for ans in answer])  # Preprocess each answer and wrap in a list
+
         elif isinstance(answer, str):  # Check if it's a string
             cleaned_answers_lists.append([preprocess_text(answer)])  # Wrap the string in a list
+            # cleaned_answers_lists.append(answer)  # Wrap the string in a list
+
         else:
             print(f"Answer is neither a list nor a string: {answer}")
             cleaned_answers_lists.append([])  # Append an empty list or handle as needed

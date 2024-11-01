@@ -42,7 +42,7 @@ def parse_args():
     parser.add_argument('--eval_context', type=str, required=True, choices=['no_context','random_context','relevant_context','wrong_date_context','mixed_context'], help='Select context to evaluate')
     parser.add_argument('--model_path', type=str, required=True, help='Path to the saved model')
     parser.add_argument('--model', type=str, required=True, choices=['gemma','mistral','llama'], help='What model (for grabbing generation configs)')
-
+    parser.add_argument('--config_type', type=str, required=True, help='What config type to use for generation')
     # OPTIONAL ARGUMENTS
     parser.add_argument('--batch_size', type=int, required=False, default=16, help='Batch size for model inference')
     parser.add_argument('--data_file', type=str, required=False, default='test.jsonl', help='Name of the data file to evaluate')
@@ -99,7 +99,7 @@ def main():
     base_model = AutoModelForCausalLM.from_pretrained(model_path)
     adapter_model = PeftModel.from_pretrained(base_model, model_path).to('cuda')
     logger.info(f"model on device: {adapter_model.device}")
-    generation_params = load_config('./resources/generator_config.json', args.model)
+    generation_params = load_config('./resources/generator_config.json', args.config_type)
     logger.info("Loaded generation parameters from configuration file.")
 
     # Generate outputs in batches

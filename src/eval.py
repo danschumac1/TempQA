@@ -12,15 +12,13 @@ ABOUT eval.py:
 HOW TO RUN:
 
 python ./src/eval.py \
---gen_path "dummy_generations.jsonl" \
---actual_path "./data/datasets/dummy/dummy_test.jsonl" \
---output_path "dummy_eval.jsonl" \
---answer_key "answer" \
---question_key "question" \
---model "dummy" \
---trained_on "mixed_context" \
---eval_on "wrong_date_context" \
---key_name "key_name_to_extract_generations"
+    --gen_path "./data/generations/gemma/MenatQA/relevant_context_trained/scope_test_relevant_context_evaluated.jsonl" \
+    --actual_path "./data/datasets/MenatQA/final/scope_test.jsonl" \
+    --model "gemma" \
+    --trained_on "relevant_context" \
+    --dataset "MenatQA" \
+    --eval_test_set "scope_test" \
+    --eval_context "relevant_context" > test1.jsonl
 """
 
 # LOCAL IMPORTS
@@ -52,11 +50,10 @@ def parse_args():
     return parser.parse_args()
 
 def main():
-    logger = setup_logging("trainer_logger")  # Initialize logger
+    logger = setup_logging("evaluation_logger")  # Initialize logger
 
   # Argument Parsing
     args = parse_args()
-
     # Debugging print
     logger.info(f"Model: {args.model}, Trained on: {args.trained_on}, Eval testset: {args.eval_test_set}, eval Context: {args.eval_context}")
 
@@ -67,13 +64,12 @@ def main():
 
     # Load actual answers
     actual_df = pd.read_json(args.actual_path, lines=True)
-
     # Load generated answers
     gen_dict = load_funky_json(args.gen_path)
-    gen_list, errors = extract_generations(gen_dict)
-    if len(errors) > 0:
-        logger.error(f"Errors in generations: {errors}")
-        exit()
+
+    gen_list = extract_generations(gen_dict)
+
+    
 
     # Extract actual answers
     actual_answers_list = extract_actual_answers(actual_df, answer_key=args.answer_key)
@@ -82,6 +78,8 @@ def main():
     f1s = []
     contains_acc = []
     for pred, ans_list in zip(gen_list, actual_answers_list):
+        # print nicely
+        print(f"Prediction: {pred}", f"\nActual: {ans_list}", "\n\n")
         f1s.append(calc_f1(pred, ans_list))
         contains_acc.append(calc_contains_acc(pred, ans_list))
     avg_contains = 'devide by zero'
@@ -103,7 +101,7 @@ def main():
         'acc': avg_contains,
         'timestamp': current_time
     }
-
+    print('butts')
     print(json.dumps(output_dict))
 
 if __name__ == "__main__":
