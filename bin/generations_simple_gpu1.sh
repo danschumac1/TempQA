@@ -11,7 +11,7 @@ model="gemma"                    # Change this
 dataset="MenatQA"                # Change this
 test_file_name="scope_test"      # Change this
 training_context="mixed_context" # Change this 
-batch_size=2                     # Change this
+batch_size=10                     # Change this
 
 # These stay the same
 dataset_folder="./data/datasets/${dataset}/final"

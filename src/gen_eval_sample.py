@@ -14,7 +14,7 @@ from peft import PeftModel
 from utils.training_utils import load_config
 from utils.gen_utils import map_tokens_over_data, get_format_function
 from utils.eval_utils import load_funky_json, extract_generations, extract_actual_answers, calc_contains_acc, calc_f1
-from utils.logging_utils import setup_logging
+from utils.logging_utils import gen_logger
 from huggingface_hub import login
 
 
@@ -37,13 +37,13 @@ def parse_args():
 
     return parser.parse_args()
 
-
 def main():
     # Argument parsing
     args = parse_args()
-    logger = setup_logging("combined_gen_eval_logger")
+    gen_logger(init=True)
 
     # Login to Hugging Face Hub
+    gen_logger('loading token.txt')
     with open('./resources/token.txt', 'r') as file:
         token = file.read().strip()
     login(token=token)
@@ -51,16 +51,19 @@ def main():
     # Load dataset
     file_path = f"{args.dataset_folder}/{args.test_file}"
     if not os.path.exists(file_path):
-        logger.error(f"File {file_path} does not exist!")
+        gen_logger(log_type="ERROR", message=f"File {file_path} does not exist!", )
         exit(1)
     
     test_data = pd.read_json(file_path, lines=True).iloc[:args.num_rows]
+    gen_logger("test_data loaded")
 
     # Set up prompt formatting function
     format_function = get_format_function(args.model)
+    gen_logger("formatted_instructions")
     test_data[args.eval_context] = format_function(test_data, context_type=args.eval_context)
 
     # Initialize tokenizer and model
+    gen_logger("tokenizing data")
     tokenizer = AutoTokenizer.from_pretrained(args.model_path, add_bos_token=True, add_eos_token=False)
     test_dataset = map_tokens_over_data(test_data, tokenizer, args.eval_context)
 
@@ -74,7 +77,7 @@ def main():
     generation_params = load_config('./resources/generator_config.json', args.config_type)
     generated_outputs = []
 
-    # Generate responses
+    gen_logger("beginning generations")
     for i, batch in enumerate(loader):
         input_ids, attention_mask = [b.to('cuda') for b in batch]
         generated_ids = model.generate(
@@ -87,7 +90,7 @@ def main():
             idx = i * args.batch_size + j
             generated_outputs.append({'INDEX': idx, args.key_name: item})
 
-        logger.info(f"Processed batch {i+1}/{len(loader)}")
+        gen_logger(f"Processed batch {i+1}/{len(loader)}")
         del input_ids, attention_mask, generated_ids
         torch.cuda.empty_cache()
 
@@ -96,17 +99,23 @@ def main():
     with open(output_path, 'w') as f:
         for item in generated_outputs:
             f.write(json.dumps(item))
-    logger.info(f"Generated responses saved to {output_path}")
+    gen_logger(f"Generated responses saved to {output_path}")
 
     # Load actual answers and evaluate
+    gen_logger("beginning eval")
     actual_answers = extract_actual_answers(test_data, answer_key=args.answer_key)
     gen_list = extract_generations(generated_outputs)
 
     f1_scores, acc_scores = [], []
     for pred, actual in zip(gen_list, actual_answers):
-        f1_scores.append(calc_f1(pred, actual))
-        acc_scores.append(calc_contains_acc(pred, actual))
-    
+        acc = calc_contains_acc(pred, actual)
+        f1 = calc_f1(pred, actual)
+
+        acc_scores.append(acc)
+        f1_scores.append(f1)
+
+        print(json.dumps({"pred": pred, "actual":actual, "acc":acc, "f1":f1}), flush=True)
+            
     avg_f1 = sum(f1_scores) / len(f1_scores) if f1_scores else 0
     avg_acc = sum(acc_scores) / len(acc_scores) if acc_scores else 0
 
@@ -118,10 +127,11 @@ def main():
         'eval_context': args.eval_context,
         'f1': avg_f1,
         'accuracy': avg_acc,
-        'timestamp': datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        'timestamp': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        'gen_params': generation_params
     }
-    logger.info(f"Evaluation Results: {result}")
-    print(json.dumps(result, indent=4))
+    gen_logger(f"Evaluation Results: {result}")
+    print(json.dumps(result, indent=8), flush=True)
 
 if __name__ == "__main__":
     main()

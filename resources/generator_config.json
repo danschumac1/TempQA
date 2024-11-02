@@ -1,12 +1,12 @@
 {
   "MenatQA_gemma_relevant": {
-    "max_new_tokens": 16,
+    "max_new_tokens": 128,
     "do_sample": true,
-    "temperature": 0.01,
-    "top_p": 0.05,
-    "repetition_penalty": 1.5,
-    "top_k": 50
-    },
+    "temperature": 0.1,
+    "top_p": 0.9,
+    "repetition_penalty": 1.6,
+    "penalty_alpha": 0.1
+  },
   "mistral": {
     "max_new_tokens": 16,
     "do_sample": true,

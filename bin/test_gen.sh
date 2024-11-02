@@ -4,9 +4,9 @@
 # ---------------------------------------------------
 model="gemma"                           # Change this
 dataset="MenatQA"                       # Change this
-training_context="mixed_context"        # Change this 
+training_context="relevant_context"     # Change this 
 test_file="counterfactual_test.jsonl"   # Change this
-batch_size=2                            # Change this
+batch_size=1                            # Change this
 eval_context="relevant_context"         # Change this
                                
 # These stay the same
