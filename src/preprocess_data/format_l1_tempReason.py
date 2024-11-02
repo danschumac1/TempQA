@@ -59,6 +59,7 @@ def main():
         df['relevant_context'] = context_df_extended['relevant_context']
         df['random_context'] = context_df_extended['random_context']
         df['wrong_date_context'] = context_df_extended['wrong_date_context']
+        df.rename(columns={'answer': 'answers'}, inplace=True)
         assign_mixed_context(df)
 
         # Save the processed df

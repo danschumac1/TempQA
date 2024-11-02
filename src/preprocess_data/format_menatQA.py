@@ -13,7 +13,6 @@ import json
 from multiprocessing import cpu_count
 import pandas as pd
 from utils.format_data_utils import assign_no_context, generate_wd_context, generate_random_context_Menat, assign_mixed_context
-
 from typing import List, Dict
 
 if __name__ == "__main__":
@@ -23,7 +22,7 @@ if __name__ == "__main__":
     # THEN ALL YOU NEED TO DO IS RANDOMLY A CONTEXT THAT IS NOT FROM ROW 3
     
     # Load the dataset
-    with open('data/datasets/MenatQA/MenatQA.json') as f:
+    with open('data/datasets/MenatQA/original/MenatQA.json') as f:
         data = json.load(f)
 
     # Splitting data into train/dev/test
@@ -48,7 +47,7 @@ if __name__ == "__main__":
                     order_row = {
                         'question': example['updated_question'],
                         'relevant_context': x['updated_text'],
-                        'answer': example['updated_answer'],
+                        'answers': [example['updated_answer']],
                         'time_scope': example.get('time_scope', []),
                         'type': 'order',
                         'id': ids
@@ -60,7 +59,7 @@ if __name__ == "__main__":
                 counter_row = {
                     'question': example['updated_question'],
                     'relevant_context': x['text'],
-                    'answer': example['updated_answer'],
+                    'answers': [example['updated_answer']],
                     'time_scope': example.get('time_scope', []),
                     'type': 'counterfactual',
                     'id': ids
@@ -70,7 +69,7 @@ if __name__ == "__main__":
                 scope_row = {
                     'question': example['question'],
                     'relevant_context': x['text'],
-                    'answer': example['updated_answer'],
+                    'answers': [example['updated_answer']],
                     'time_scope': example.get('time_scope', []),
                     'type': 'scope',
                     'id': ids
@@ -81,7 +80,7 @@ if __name__ == "__main__":
                 narrow_row = {
                     'question': example['question'],
                     'relevant_context': x['text'],
-                    'answer': example['updated_answer'],
+                    'answers': [example['updated_answer']],
                     'time_scope': example.get('time_scope', []),
                     'type': 'scope_expand',
                     'id': ids
@@ -91,7 +90,7 @@ if __name__ == "__main__":
                 wide_row = {
                     'question': example['updated_question'],
                     'relevant_context': x['updated_text'],
-                    'answer': example['updated_answer'],
+                    'answers': [example['updated_answer']],
                     'time_scope': example.get('time_scope', []),
                     'type': 'scope_expand',
                     'id': ids
@@ -114,7 +113,3 @@ if __name__ == "__main__":
         df.to_json(
             f'data/datasets/MenatQA/final/{split}.jsonl', orient='records', lines=True
             )
-
-    
-
-

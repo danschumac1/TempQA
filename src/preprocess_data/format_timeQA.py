@@ -25,14 +25,14 @@ def preprocess_data(file_path):
     df = pd.read_json(file_path, lines=True)
     
     # Create 'answer' column and rename 'context' to 'relevant_context'
-    df['answer'] = df['targets']
+    df['answers'] = df['targets']
     df['relevant_context'] = df['context']
     
     # Drop unnecessary columns
     df.drop(columns=['targets', 'context', 'paragraphs'], inplace=True)
     
     # Replace empty answer (['']) with ['unanswerable']
-    df['answer'] = df['answer'].apply(lambda x: ['unanswerable'] if x == [''] else x)
+    df['answers'] = df['answers'].apply(lambda x: ['unanswerable'] if x == [''] else x)
 
     # Add split column based on the file name
     split_name = file_path.split('/')[-1].split('.json')[0].replace('.', '_')
