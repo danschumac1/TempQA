@@ -13,10 +13,9 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 from peft import PeftModel
 from utils.training_utils import load_config
 from utils.gen_utils import map_tokens_over_data, get_format_function
-from utils.eval_utils import load_funky_json, extract_generations, extract_actual_answers, calc_contains_acc, calc_f1
+from utils.eval_utils import extract_generations, extract_actual_answers, calc_contains_acc, calc_f1
 from utils.logging_utils import gen_logger
 from huggingface_hub import login
-
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Combine generation and evaluation.')
@@ -28,11 +27,12 @@ def parse_args():
     parser.add_argument('--model_path', type=str, required=True, help='Path to the model')
     parser.add_argument('--model', type=str, required=True, choices=['gemma','mistral','llama'], help='Model type')
     parser.add_argument('--config_type', type=str, required=True, help='Type of generation config')
-
+    parser.add_argument('--splitter', type=str, default='\nmodel\n', help='Splitter for generation output')
+    
     # Optional arguments
     parser.add_argument('--batch_size', type=int, default=2, help='Batch size for inference')
     parser.add_argument('--num_rows', type=int, default=10, help='Number of rows to process')
-    parser.add_argument('--answer_key', type=str, default='answer', help='Key for actual answers in data')
+    parser.add_argument('--answer_key', type=str, default='answers', help='Key for actual answers in data')
     parser.add_argument('--key_name', type=str, default='OUTPUT', help='Key for extracting generated outputs')
 
     return parser.parse_args()
@@ -98,13 +98,13 @@ def main():
     output_path = './temp_generated_responses.jsonl'
     with open(output_path, 'w') as f:
         for item in generated_outputs:
-            f.write(json.dumps(item))
+            f.write(json.dumps(item) + '\n')
     gen_logger(f"Generated responses saved to {output_path}")
-
+    
     # Load actual answers and evaluate
     gen_logger("beginning eval")
     actual_answers = extract_actual_answers(test_data, answer_key=args.answer_key)
-    gen_list = extract_generations(generated_outputs)
+    gen_list = extract_generations(generated_outputs, splitter=args.splitter)
 
     f1_scores, acc_scores = [], []
     for pred, actual in zip(gen_list, actual_answers):

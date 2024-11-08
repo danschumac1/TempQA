@@ -1,41 +1,35 @@
-The token has not been saved to the git credentials helper. Pass `add_to_git_credential=True` in this function directly or `--add-to-git-credential` if using via `huggingface-cli` if you want to set the git credential as well.
-Token is valid (permission: read).
-Your token has been saved to /home/hdd249/.cache/huggingface/token
-Login successful
-{"pred": "answer soviet union or russia since he became honored with it on dec decker for his achievements at that time period", "actual": ["russian"], "acc": 0, "f1": 0}
-{"pred": "20th century soviet union or russian sfsr since it was part during that time period until its collapse on december thirty first january second then became russia after this date united states soviet union states between them", "actual": ["ussr"], "acc": 0, "f1": 0}
-{"pred": "9th lieutenant governorships or acting lieutenantship during that year until they were replaced by newly appointed territorial governors under president zachary taylor at which point kirkwood resigned for health reasons then became an unsuccessful candidate against stephen decatur increated with john calhoun vice president nominee alexander hamilton childs who won election but died before inauguration leaving vicepresident kellogg acting chief executive officer after serving two years unopposed since january first december thirty one", "actual": ["governor"], "acc": 1, "f1": 0}
-{"pred": "3rd class representative senator in united states senate and was elected a democrat unionist senator at large by popular vote over republican john a francis on november election day with more than half again their opponents votes cast against them both together he took office january next year but soon after that became governor when it appeared certain democrats would win control either house or other political power they sought through impeachment proceedings which were later dropped before trial began", "actual": ["u s senator"], "acc": 0, "f1": 0.024691358024691357}
-{"pred": "david hasslehoff in a very brief time span of three years between them marrying each other at an unspecific date during this period it appears they did not get officially legally joined together by either state law for california since there has no documentation about such wedding bond filed via official channels within any county clerk office serving los angeles county ca where marriages are recorded under state law", "actual": ["david hasselhoff"], "acc": 0, "f1": 0.029411764705882356}
-{"pred": "michael knight in a single word unanswerable since it can not be answered without additional information about katherine hickland michael knight relationship which has been omitted here", "actual": ["michael e knight"], "acc": 0, "f1": 0.14285714285714285}
-{"pred": "3rd soviet embassy north korea in moscow or at least related with it since his employer there were diplomats working on behalf either country during that time period", "actual": ["the ussr embassy in north korea"], "acc": 0, "f1": 0.23529411764705882}
-{"pred": "3rd embassy north america in washington d c united states or moscow russia", "actual": ["unanswerable"], "acc": 0, "f1": 0}
-{"pred": "3rd unanswerable unanswered until more information has been given or context provided by which i can work out an educated guess on who it would be that served this role at one point during these years", "actual": ["josef vacek"], "acc": 0, "f1": 0}
-{"pred": "universityofoklahoma unanswerable given text states that he worked there between this time period but does not specify its location or details about his employment here therefore i can t provide any information on it either", "actual": ["university of oklahoma"], "acc": 0, "f1": 0}
-{"pred": "7th day student advisor or assistant director student affairs until he became president on july august each year during his tenure there then again after that date when students returned home before school started up once more in august with no official title but still working full time through december while waiting upon appointment by governor miller either late summer early fall into january the latter position terminated effective june thirty first", "actual": ["dean of students at the university of tennessee"], "acc": 0, "f1": 0.051948051948051945}
-{"pred": "3rd bangus or the second place at state championship rio de janerio on that season wikipedia states it either way", "actual": ["bangu ac"], "acc": 0, "f1": 0}
-{"pred": "0utdoor de g\u00e1vea in portuguese or simply ogac since it was a local name given by supporters and journalists at that moment until they started using its official nickname gr\u00e3o leme futebol club", "actual": ["campo grande ac"], "acc": 0, "f1": 0}
-{"pred": "4 johnshopkins university in particular at its medical school obrazy", "actual": ["bryn mawr"], "acc": 0, "f1": 0}
-{"pred": "7th street hospital johns hopkins university or at least related to it since they were part same institution until after world war ii when its faculty was transferred over into what would become known simply under the john f pikes center building which opened officially that year however there appears no documentation about this transfer either way", "actual": ["institute of johns hopkins school of medicine"], "acc": 0, "f1": 0.06349206349206349}
-{"pred": "20th century research associateship columbia universtity or harvard medical school where they collaborated on studies related primarily by their employer during this period joseph goldberger the cancer center institute william clyde morgan massachusetts general hospital brigham young universities department medicine until his retirement there after world war ii when he became an employee again here before retiring permanently around midyear into private practice near cambridge ma along side wife dorothy who was employed part time teaching elementary school students about art history via lectures given throughout america between them both being active participants together since late summer up through early fall each year starting back toward boston area schools district no later than september", "actual": ["columbia university"], "acc": 0, "f1": 0.017391304347826087}
-{"pred": "0verbrook hall in england or rome university where he studied theology between them years until they were terminated due either upon him leaving school with no degree awarded after being unable again that year because it appears there has never been an award given out under this name since then however unconfirmed sources indicate another source states otherwise", "actual": ["woodstock college"], "acc": 0, "f1": 0}
-{"pred": "5th member backbenchers for unspecific time interval until appointment or promotion into cabinet post on june august then minister under secretary state with responsibility over government policy unit public service reform implementation between august december before becoming parliamentary private secretary again during november decmeber", "actual": ["backbencher and first period as government minister"], "acc": 0, "f1": 0.08163265306122448}
-{"pred": "3rd paymaster general or parliamentary undersecretary on social security between july august lord commissioner responsible with her majesty s government office northern ireland during this time period", "actual": ["unanswerable"], "acc": 0, "f1": 0}
-{"pred": "answer russia or russion imperial state since he had been granted an honorary professorship at moscow university by nicholas ii on april augusts for his work with ilya prigogine against whom there were allegations that they collaborated during world war i however no evidence has ever surfaced supporting this claim either way wikipedia", "actual": ["russian empire"], "acc": 0, "f1": 0}
+{"pred": "russian", "actual": ["russian"], "acc": 1, "f1": 1.0}
+{"pred": "ussr", "actual": ["ussr"], "acc": 1, "f1": 1.0}
+{"pred": "unanswerable the position of samuel j kirkwood from 1862", "actual": ["governor"], "acc": 0, "f1": 0}
+{"pred": "unanswerable the position of the u s senator was held from", "actual": ["u s senator"], "acc": 1, "f1": 0.4615384615384615}
+{"pred": "david hasselhoff and catherine hickland got married in 1985 and", "actual": ["david hasselhoff"], "acc": 1, "f1": 0.3636363636363636}
+{"pred": "michael e knight the spouse of catherine hickland from 1995 to", "actual": ["michael e knight"], "acc": 1, "f1": 0.42857142857142855}
+{"pred": "the ussr embassy in north korea from 1985 to 1990", "actual": ["the ussr embassy in north korea"], "acc": 1, "f1": 0.7499999999999999}
+{"pred": "russian embassy in south korea from 1990 to 1991 no longer", "actual": ["unanswerable"], "acc": 0, "f1": 0}
+{"pred": "unanswerable josef vacek became the chair of p\u0159\u00edbram from", "actual": ["josef vacek"], "acc": 1, "f1": 0.3636363636363636}
+{"pred": "university of oklahoma", "actual": ["university of oklahoma"], "acc": 1, "f1": 1.0}
+{"pred": "university of tennessee", "actual": ["dean of students at the university of tennessee"], "acc": 0, "f1": 0.6}
+{"pred": "bangu ac from 1951 to 1961", "actual": ["bangu ac"], "acc": 1, "f1": 0.5}
+{"pred": "campo grande ac from 1963 to 1966", "actual": ["campo grande ac"], "acc": 1, "f1": 0.6}
+{"pred": "bryn mawr college of art and design of the university of iowa from", "actual": ["bryn mawr"], "acc": 1, "f1": 0.3076923076923077}
+{"pred": "institute of johns hopkins school of medicine from 1929 to 1941", "actual": ["institute of johns hopkins school of medicine"], "acc": 1, "f1": 0.7499999999999999}
+{"pred": "columbia university from 1945 to 1955", "actual": ["columbia university"], "acc": 1, "f1": 0.5}
+{"pred": "unanswerable joseph j himmel graduated from woodstock college in", "actual": ["woodstock college"], "acc": 1, "f1": 0.3636363636363636}
+{"pred": "unanswerable the position of angela eagle from 2004 to 200", "actual": ["backbencher and first period as government minister"], "acc": 0, "f1": 0}
+{"pred": "unanswerable the position of minister of state for pensions and ageing", "actual": ["unanswerable"], "acc": 1, "f1": 0.18181818181818182}
+{"pred": "russian empire", "actual": ["russian empire"], "acc": 1, "f1": 1.0}
 {
-        "model": "gemma",
+        "model": "llama",
         "dataset": "MenatQA",
-        "trained_on": "relevant_context_trained",
+        "trained_on": "relevant_context-24epochs",
         "eval_context": "relevant_context",
-        "f1": 0.03233592280419707,
-        "accuracy": 0.05,
-        "timestamp": "2024-11-02 11:40:36",
+        "f1": 0.5085264735264734,
+        "accuracy": 0.8,
+        "timestamp": "2024-11-07 17:59:03",
         "gen_params": {
-                "max_new_tokens": 128,
+                "max_new_tokens": 16,
                 "do_sample": true,
                 "temperature": 0.1,
-                "top_p": 0.9,
-                "repetition_penalty": 1.6,
-                "penalty_alpha": 0.1
+                "top_p": 0.1
         }
 }

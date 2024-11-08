@@ -1,26 +1,26 @@
 #!/bin/bash
 # ---------------------------------------------------------------------------
-# To Run: nohup ./bin/generations_gpu0.sh &
+# To Run: nohup ./bin/generations_simple_gpu1.sh &
 # ---------------------------------------------------------------------------
 # Set the parameters
 test_files=("counterfactual_test.jsonl" "scope_test.jsonl" "scope_expand_test.jsonl" "order_test.jsonl") # for MENATQA
-# test_files=("test_easy.jsonl") # for TimeQAEasy and TimeQAHard
+# test_files=("test_easy.jsonl") # for TimeQAEasy
+# test_files=("test_hard.jsonl") # for TimeQAHard
 # test_files=("test.jsonl") # for everything else
 
-model="gemma"                    # Change this
+model="llama"                    # Change this
 dataset="MenatQA"                # Change this
-test_file_name="scope_test"      # Change this
 training_context="mixed_context" # Change this 
-batch_size=10                     # Change this
+batch_size=2                     # Change this
 
 # These stay the same
 dataset_folder="./data/datasets/${dataset}/final"
 eval_contexts=("relevant_context" "wrong_date_context" "random_context" "no_context")
 config_type="${dataset}_${model}_${training_context%%_context*}"
-gpu=1  
+gpu=0  
 
 # Create / clear error log
-error_log="./logs/generation_errors_gpu${gpu}.log"
+error_log="./logs/gen_${model}_${training_context}.log"
 > "$error_log"
 
 # Loop through each test file

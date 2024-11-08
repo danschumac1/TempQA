@@ -5,18 +5,27 @@
 # Bash script to run the combined generation and evaluation Python script
 
 # CHANGE THESE
-test_file="counterfactual_test.jsonl"
-dataset="MenatQA"
-training_context="relevant_context"
+test_file="test.jsonl"
+dataset="TR_l2"
+training_context="mixed_context-stacked_trained"
 eval_context="relevant_context"
-model_type="gemma"
 num_rows=20
 batch_size=4
+model_type="llama"
+splitter=$'assistant\n' # LLAMA uses this splitter
+# model_type="mistral"
+# splitter="[/INST]" # Mistral uses this splitter
+# model_type="gemma"
+# splitter=$'\nmodel\n' # Gemma uses this splitter
 
 # DON'T CHANGE THESE
 data_folder="./data/datasets/${dataset}/final"
-model_path="models/${model_type}/${dataset}/${training_context}_trained"
-config_type="${dataset}_${model_type}_${training_context%%_context*}"
+# model_path="models/${model_type}/${dataset}/${training_context}"
+model_path="models/${model_type}/MenatQA/${training_context}"
+
+# config_type="${dataset}_${model_type}_${training_context%%_context*}"
+config_type="MenatQA_${model_type}_${training_context%%_context*}"
+
 
 # Run the Python script
 CUDA_VISIBLE_DEVICES=0 python ./src/gen_eval_sample.py \
@@ -29,6 +38,7 @@ CUDA_VISIBLE_DEVICES=0 python ./src/gen_eval_sample.py \
     --config_type "$config_type" \
     --batch_size "$batch_size" \
     --num_rows "$num_rows" \
+    --splitter "$splitter" \
      >"dummy_${dataset}_${model}_${training_context%%_context*}_trained.jsonl"
 
 # Print completion message

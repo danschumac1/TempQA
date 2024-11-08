@@ -1,11 +1,11 @@
 #!/bin/bash
-#SBATCH -J relevant_training         # Job name
-#SBATCH -o ./logs/relevant_training_%j.out  # Standard output file
-#SBATCH -e ./logs/relevant_training_%j.err  # Standard error file
-#SBATCH -p gpu1v100                  # Partition name
-#SBATCH -N 1                         # Number of nodes
-#SBATCH -n 1                   # Specify 1 task/core
-#SBATCH --time=72:00:00              # Time limit
+#SBATCH -J relevant_training_24_epochs                  # Job name
+#SBATCH -o ./logs/relevant_training_24_epochs%j.out     # Standard output file
+#SBATCH -e ./logs/relevant_training_24_epochs%j.err     # Standard error file
+#SBATCH -p amdgpu                                       # Partition name
+#SBATCH -N 1                                            # Number of nodes
+#SBATCH -n 1                                            # Specify 1 task/core
+#SBATCH --time=72:00:00                                 # Time limit
 
 # Debugging output to check the environment
 echo "Starting job at $(date)"

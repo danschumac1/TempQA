@@ -4,7 +4,7 @@
 # ---------------------------------------------------
 model="gemma"                           # Change this
 dataset="MenatQA"                       # Change this
-training_context="relevant_context"     # Change this 
+training_context="mixed_context-stacked" # Change this 
 test_file="counterfactual_test.jsonl"   # Change this
 batch_size=1                            # Change this
 eval_context="relevant_context"         # Change this
@@ -13,7 +13,6 @@ eval_context="relevant_context"         # Change this
 gpu=0    
 dataset_folder="./data/datasets/${dataset}/final"
 config_type="${dataset}_${model}_${training_context%%_context*}"
-save_path="./data/generations/${model}/${dataset}/${training_context}_trained"
 
 CUDA_VISIBLE_DEVICES=$gpu python ./src/test_gen.py \
     --model="$model" \
