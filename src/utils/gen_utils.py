@@ -6,30 +6,36 @@ import random
 
 def gemma_generation_formatter(df: pd.DataFrame, context_type: str) -> list:
     prompts = []
-    
     # Iterate over the DataFrame rows
     for question, context in zip(df['question'], df[context_type]):
-        # Format prompt based on context type
-        if context_type == 'no_context' or context == '':
-            prompt = f'''<bos><start_of_turn>user\nIn as few words as possible, answer the following question.\nQuestion: {question}\nContext: None<end_of_turn>\n<start_of_turn>model\nThe answer is '''
-
-        else:
-            # prompt = f'''<bos><start_of_turn>user\nAnswer the question given the context\nQuestion:{question}\nContext: {context}<end_of_turn>\n<start_of_turn>model\nThe answer is: '''
-            prompt = f'''<bos><start_of_turn>user\nIn as few words as possible, answer the following question.\nQuestion: {question}\nContext: {context}<end_of_turn>\n<start_of_turn>model\nThe answer is '''
-
+        prompt = f'''<bos><start_of_turn>user\nIn as few words as possible, answer the following question given the context.\nQuestion: {question}\nContext: {context}<end_of_turn>\n<start_of_turn>model\n'''
         prompts.append(prompt)
-    
     return prompts
+
+def llama_generation_formatter(df: pd.DataFrame, context_type: str) -> list:
+    prompts = []
+    for question, context in zip(df['question'], df[context_type]):
+        system = "You are an expert in answering time related questions. Please provide consistent, brief answers in the style of 'The answer is X'."
+        prompt  = f"<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\{system}<|eot_id|><|start_header_id|>user<|end_header_id|>\n{question}<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n"
+        prompts.append(prompt)
+    return prompts
+
+def mistral_generation_formatter(df: pd.DataFrame, context_type: str) -> list:
+    prompts = []
+    for question, context in zip(df['question'], df[context_type]):
+        prompt = f'''<s>[INST] In as few words as possible, answer the following question given the context.\nQuestion:{question}\nContext:{context}[/INST]\n'''
+        prompts.append(prompt)
+    return prompts
+
 
 def get_format_function(model:str) -> callable:
     # Define mappings for instruction-tuned (IT) and non-instruction-tuned (NIT) models
     format_functions = {
         'gemma': gemma_generation_formatter,
-        # 'llama': format_llama_generations, TODO: Add llama functions
-        # 'mistral': format_mistral_generations, TODO: Add mistral functions
+        'llama': llama_generation_formatter,
+        'mistral': mistral_generation_formatter
     }
     
-    # Return the corresponding function
     return format_functions.get(model)
 
 def map_tokens_over_data(df: pd.DataFrame, tokenizer: PreTrainedTokenizer, context: str) -> Dataset:
