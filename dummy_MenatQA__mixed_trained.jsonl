@@ -1,0 +1,35 @@
+{"pred": "russian from 1918 unanswerable 1919 to 1921", "actual": ["russian"], "acc": 1, "f1": 0.25}
+{"pred": "ussr 1945 1989 united states 1941", "actual": ["ussr"], "acc": 1, "f1": 0.2857142857142857}
+{"pred": "governor in 1861 unanswerable as the position of governor", "actual": ["governor"], "acc": 1, "f1": 0.2222222222222222}
+{"pred": "u s senator in 1878 unanswerable 1880 to", "actual": ["u s senator"], "acc": 1, "f1": 0.5454545454545454}
+{"pred": "david hasselhoff and catherine hickland got married in 1985", "actual": ["david hasselhoff"], "acc": 1, "f1": 0.3636363636363636}
+{"pred": "michael e knight and catherine hickland got divorced in 2008", "actual": ["michael e knight"], "acc": 1, "f1": 0.4615384615384615}
+{"pred": "ussr embassy in north korea from 1986 unanswerable", "actual": ["the ussr embassy in north korea"], "acc": 0, "f1": 0.7142857142857143}
+{"pred": "russian embassy in south korea 1991 unanswerable 1996", "actual": ["unanswerable"], "acc": 1, "f1": 0.2222222222222222}
+{"pred": "josef vacek 1998 2001 he was the chair of", "actual": ["josef vacek"], "acc": 1, "f1": 0.3636363636363636}
+{"pred": "university of oklahoma in the 1920s he was also the president of", "actual": ["university of oklahoma"], "acc": 1, "f1": 0.4615384615384615}
+{"pred": "dean of students at the university of tennessee from 1940 unanswerable", "actual": ["dean of students at the university of tennessee"], "acc": 1, "f1": 0.8235294117647058}
+{"pred": "bangu ac unanswerable 1962 d\u00e9cio esteves", "actual": ["bangu ac"], "acc": 1, "f1": 0.5}
+{"pred": "campo grande ac unanswerable d\u00e9cio no longer collaborated with the", "actual": ["campo grande ac"], "acc": 1, "f1": 0.4615384615384615}
+{"pred": "bryn mawr college unanswerable unanswerable un", "actual": ["bryn mawr"], "acc": 1, "f1": 0.5714285714285715}
+{"pred": "institute of johns hopkins school of medicine in baltimore maryland 1929", "actual": ["institute of johns hopkins school of medicine"], "acc": 1, "f1": 0.7499999999999999}
+{"pred": "columbia university s knapp foundation of the college of physicians and surgeons from", "actual": ["columbia university"], "acc": 1, "f1": 0.2857142857142857}
+{"pred": "woodstock college in 1887 he graduated from there with a bachelor of", "actual": ["woodstock college"], "acc": 1, "f1": 0.2857142857142857}
+{"pred": "backbencher and first period as government minister from 2003 following", "actual": ["backbencher and first period as government minister"], "acc": 1, "f1": 0.8235294117647058}
+{"pred": "minister of state for pensions and ageing society from 2012 to", "actual": ["unanswerable"], "acc": 0, "f1": 0}
+{"pred": "russian empire 1905 1915 1916 1945 united", "actual": ["russian empire"], "acc": 1, "f1": 0.4444444444444445}
+{
+        "model": "llama",
+        "dataset": "MenatQA",
+        "trained_on": "mixed_context-stacked_trained",
+        "eval_context": "relevant_context",
+        "f1": 0.44180737563090505,
+        "accuracy": 0.9,
+        "timestamp": "2024-11-06 11:01:48",
+        "gen_params": {
+                "max_new_tokens": 16,
+                "do_sample": true,
+                "temperature": 0.1,
+                "top_p": 0.1
+        }
+}
