@@ -1,39 +1,123 @@
 {
     "gemma": {
       "base_model": "google/gemma-7b-it",
-      "formatter": "gemma_IT",
+      "formatter": "gemma_formatter",
+      "max_seq_length": 512,
+      "padding_side": "right",
+      "packing": true,
+      "dataset_num_proc" : 0,
       "lora_config": {
         "r": 16,
         "lora_alpha": 32,
-        "target_modules": "all-linear",
+        "target_modules": ["o_proj", "q_proj", "up_proj", "v_proj", "k_proj", "down_proj", "gate_proj"],
         "lora_dropout": 0.05,
         "bias": "none",
         "task_type": "CAUSAL_LM",
         "modules_to_save": ["lm_head", "embed_token"]
-      }
-    },
-    "mistral": {
-      "base_model": "huggingface/MISTRAL BLAH-7b",
-      "formatter": "MISTRAL BLAH",
-      "lora_config": {
-        "r": 8,
-        "lora_alpha": 64,
-        "target_modules": ["q_proj", "k_proj", "v_proj"],
-        "lora_dropout": 0.1,
-        "bias": "none",
-        "task_type": "CAUSAL_LM"
+      },
+      "trainer_config": {
+        "num_train_epochs": 6,
+        "per_device_train_batch_size": 8,
+        "per_device_eval_batch_size": 8,
+        "learning_rate": 2e-5,
+        "eval_accumulation_steps": 1,
+        "gradient_accumulation_steps": 8,
+        "warmup_steps": 1,
+        "gradient_checkpointing": true,
+        "fp16": true,
+        "optim": "paged_adamw_8bit",
+        "logging_steps": 25,
+        "eval_steps": 500,
+        "output_dir": "./output/gemma",
+        "save_strategy": "epoch",
+        "evaluation_strategy": "epoch",
+        "save_total_limit": 1,
+        "load_best_model_at_end": true,
+        "metric_for_best_model": "eval_loss",
+        "greater_is_better": false,
+        "report_to": ["wandb"]
       }
     },
     "llama": {
-      "base_model": "huggingface/llama-7b",
-      "formatter": "LLAMA BLAH",
+        "base_model": "unsloth/llama-3-8b-Instruct",
+        "formatter": "llama_formatter",
+        "max_seq_length": 512,
+        "padding_side": "right",
+        "packing": false,
+        "dataset_num_proc" : 2,
+        "lora_config": {
+          "r": 32,
+          "lora_alpha": 64,
+          "target_modules": ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
+          "lora_dropout": 0,
+          "bias": "none",
+          "task_type": "CAUSAL_LM",
+          "modules_to_save": ["lm_head", "embed_tokens"]
+        },
+        "trainer_config": {
+          "num_train_epochs": 6,
+          "per_device_train_batch_size": 8,
+          "per_device_eval_batch_size": 8,
+          "learning_rate": 2e-4,
+          "eval_accumulation_steps": 1,
+          "gradient_accumulation_steps": 4,
+          "warmup_steps": 94,
+          "gradient_checkpointing": true,
+          "fp16": false,
+          "bf16": true,
+          "optim": "adamw_8bit",
+          "weight_decay": 0.01,
+          "lr_scheduler_type": "linear",
+          "logging_steps": 25,
+          "eval_steps": 25,
+          "output_dir": "./output/llama",
+          "save_strategy": "epoch",
+          "evaluation_strategy": "epoch",
+          "save_total_limit": 1,
+          "load_best_model_at_end": true,
+          "metric_for_best_model": "eval_loss",
+          "greater_is_better": false,
+          "report_to": ["wandb"],
+          "seed": 3407
+        }
+      },
+    "mistral": {
+      "base_model": "unsloth/mistral-7b-instruct-v0.2-bnb-4bit",
+      "formatter": "mistral_formatter",
+      "max_seq_length": 512,
+      "padding_side": "right",
+      "packing": false,
       "lora_config": {
-        "r": 8,
+        "r": 32,
         "lora_alpha": 64,
         "target_modules": ["q_proj", "k_proj", "v_proj"],
         "lora_dropout": 0.1,
         "bias": "none",
-        "task_type": "CAUSAL_LM"
+        "task_type": "CAUSAL_LM",
+        "modules_to_save": ["lm_head", "embed_tokens"]
+      },
+      "trainer_config": {
+        "num_train_epochs": 6,
+        "per_device_train_batch_size": 8,
+        "per_device_eval_batch_size": 8,
+        "learning_rate": 2.5e-5,
+        "eval_accumulation_steps": 1,
+        "gradient_accumulation_steps": 1,
+        "warmup_steps": 94,
+        "gradient_checkpointing": true,
+        "fp16": false,
+        "bf16": true,
+        "optim": "paged_adamw_8bit",
+        "logging_steps": 25,
+        "eval_steps": 25,
+        "output_dir": "./output/mistral",
+        "save_strategy": "epoch",
+        "evaluation_strategy": "epoch",
+        "save_total_limit": 1,
+        "load_best_model_at_end": true,
+        "metric_for_best_model": "eval_loss",
+        "greater_is_better": false,
+        "report_to": ["wandb"]
       }
     }
-  }
+}
