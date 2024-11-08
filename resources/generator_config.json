@@ -7,16 +7,44 @@
     "repetition_penalty": 1.6,
     "penalty_alpha": 0.1
   },
-  "mistral": {
+  "MenatQA_gemma_mixed": {
+    "max_new_tokens": 128,
+    "do_sample": true,
+    "temperature": 0.1,
+    "top_p": 0.9,
+    "repetition_penalty": 1.6,
+    "penalty_alpha": 0.1
+  },
+  "MenatQA_llama_relevant": {
+    "max_new_tokens": 16,
+    "do_sample": true,
+    "temperature": 0.1,
+    "top_p": 0.1
+  },
+  "MenatQA_llama_mixed": {
+    "max_new_tokens": 16,
+    "do_sample": true,
+    "temperature": 0.1,
+    "top_p": 0.1
+  },
+  "MenatQA_mistral_relevant": {
     "max_new_tokens": 16,
     "do_sample": true,
     "temperature": 1.9,
     "top_p": 0.1
   },
-  "llama": {
+  "MenatQA_mistral_mixed": {
     "max_new_tokens": 16,
     "do_sample": true,
     "temperature": 1.9,
     "top_p": 0.1
+  },
+  "mixed_context-stacked": {
+    "max_new_tokens": 128,
+    "do_sample": true,
+    "temperature": 0.1,
+    "top_p": 0.9,
+    "repetition_penalty": 1.6,
+    "penalty_alpha": 0.1
   }
 }
