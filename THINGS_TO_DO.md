@@ -22,4 +22,6 @@
         - This repo needs to be reproducible. 
 
 
- #["o_proj", "q_proj", "up_proj", "v_proj", "k_proj", "down_proj", "gate_proj"],
+ #,
+    dataset_num_proc = 2,
+    packing = False,    
