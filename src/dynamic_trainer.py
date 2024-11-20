@@ -28,6 +28,7 @@ def parse_args():
     parser.add_argument('--train_file_path', type=str, required=True, help='Path to the training dataset')
     parser.add_argument('--dev_file_path', type=str, required=True, help='Path to the dev dataset')
     parser.add_argument('--gpu', type=int, required=True, help='Which GPU to use?')    
+    parser.add_argument('--epochs', type=int, required=True, help='How many epochs to train for?')
     return parser.parse_args()
 
 def main():
@@ -36,7 +37,7 @@ def main():
     warnings.filterwarnings("ignore")
 
     args = parse_args()
-    log_file = f'./logs/dynamic_trainer_gpu{args.gpu}.log'
+    log_file = f'./logs/dt_{args.model_type}_{args.training_context}_{args.epochs}-epochs.log'
     gen_logger(init=True, log_file=log_file)  # Initialize gen_logger
     gen_logger(
         f'Beginning training ||| training context: {args.training_context}, '
@@ -54,6 +55,8 @@ def main():
     # Load the configuration from JSON file based on the selected model type
     config_path = 'resources/trainer_config.json'
     config = load_config(config_path, args.model_type)
+    config['trainer_config']['output_dir'] = args.save_path
+    config['trainer_config']['num_train_epochs'] = args.epochs
 
     # Initialize wandb
     gen_logger('WANDB initialized', log_file=log_file)

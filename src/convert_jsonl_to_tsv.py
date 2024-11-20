@@ -10,8 +10,6 @@ import json
 import csv
 import os
 def main():
-
-
     # Input and output file paths
     input_file = "./data/results/results.jsonl"
     output_file = "./data/results/results.tsv"
@@ -49,7 +47,6 @@ def main():
             writer.writerow(row)
 
     print(f"Data has been successfully written to {output_file}.")
-
 
 if __name__ == "__main__":
     main()

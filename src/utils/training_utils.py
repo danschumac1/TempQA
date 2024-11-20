@@ -26,16 +26,13 @@ def gemma_trainer_formatter(df: pd.DataFrame, context_type: str) -> list:
     return prompts
 
 def llama_trainer_formatter(df: pd.DataFrame, context_type: str) -> list:
-    prompts = []
-    # Iterate over the DataFrame rows
-    for question, answer, context in zip(df['question'], df['answers'], df[context_type]):
-        answer = extract_answer_from_list(answer)
-        # [INST] {row['question']} Here is the context: {row[context_column]} [/INST] \nThe answer is: {row['answer']} " + EOS_TOKEN
-        # prompt = f'''<|begin_of_text|>[INST] In as few words as possible, answer the following question given the context.\nQuestion:{question}\nContext: {context}[/INST]\n{answer}<|eot_id|>'''
+    formatted_prompts = []
+    for question, context, answer in zip(df['question'], df[context_type], df['answers']):
         system = "You are an expert in answering time related questions. Please provide consistent, brief answers in the style of 'The answer is X'."
-        prompt  = f"<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\{system}<|eot_id|><|start_header_id|>user<|end_header_id|>\n{question}<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n{answer}<|eot_id|>"
-        prompts.append(prompt)
-    return prompts
+        prompt = f"In as few words as possible, answer the following question given the context.\nQuestion: {question}\nContext: {context}"
+        formatted_prompt  = f"<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\n{system}<|eot_id|><|start_header_id|>user<|end_header_id|>\n\n{prompt}<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n{answer}"
+        formatted_prompts.append(formatted_prompt)
+    return formatted_prompts
 
 def mistral_trainer_formatter(df: pd.DataFrame, context_type: str) -> list:
     prompts = []
@@ -152,11 +149,9 @@ def get_trainer(
     )
 
     # Extract the trainer configuration from the config dictionary
-    trainer_args = config["trainer_config"]
-
-    # Ensure output_dir is set
-    trainer_args["output_dir"] = trainer_args.get("output_dir", save_path)
-
+    # print the trainer configuration
+    for key, value in config["trainer_config"].items():
+        print(f"{key}: {value}")
     # Set up the trainer using the provided configuration
     trainer = SFTTrainer(
         model=model,
@@ -169,7 +164,7 @@ def get_trainer(
         data_collator=transformers.DataCollatorForLanguageModeling(tokenizer, mlm=False),
         args=TrainingArguments(
             run_name=f'{config["base_model"]}-trained',
-            **trainer_args
+            **config["trainer_config"],
         ),
     )
     return trainer

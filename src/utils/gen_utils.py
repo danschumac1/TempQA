@@ -13,12 +13,13 @@ def gemma_generation_formatter(df: pd.DataFrame, context_type: str) -> list:
     return prompts
 
 def llama_generation_formatter(df: pd.DataFrame, context_type: str) -> list:
-    prompts = []
+    formatted_prompts = []
     for question, context in zip(df['question'], df[context_type]):
         system = "You are an expert in answering time related questions. Please provide consistent, brief answers in the style of 'The answer is X'."
-        prompt  = f"<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\{system}<|eot_id|><|start_header_id|>user<|end_header_id|>\n{question}<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n"
-        prompts.append(prompt)
-    return prompts
+        prompt = f"In as few words as possible, answer the following question given the context.\nQuestion: {question}\nContext: {context}"
+        formatted_prompt  = f"<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\n{system}<|eot_id|><|start_header_id|>user<|end_header_id|>\n\n{prompt}<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n"
+        formatted_prompts.append(formatted_prompt)
+    return formatted_prompts
 
 def mistral_generation_formatter(df: pd.DataFrame, context_type: str) -> list:
     prompts = []
@@ -27,13 +28,40 @@ def mistral_generation_formatter(df: pd.DataFrame, context_type: str) -> list:
         prompts.append(prompt)
     return prompts
 
+def menatqa_base_llama_formatter(df: pd.DataFrame, context_type: str) -> list:
+    formatted_prompts = []
+    for question, context in zip(df['question'], df[context_type]):
+        system = "You are an expert in answering time related questions. Please provide consistent, brief answers in the style of 'The answer is X'."
+        prompt = f"Get answers for the question based on the context, where the answer is derived from substrings in the context or categorized as 'unanswerable':\n\n Context: {context}\n\n Question: {question}\n\n Answer:"
+        formatted_prompt  = f"<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\n{system}<|eot_id|><|start_header_id|>user<|end_header_id|>\n\n{prompt}<|eot_id|><|start_header_id|>assistant<|end_header_id|>"
+        formatted_prompts.append(formatted_prompt)
+    return formatted_prompts
+
+def menatqa_scope_llama_formatter(df: pd.DataFrame, context_type: str) -> list:
+    formatted_prompts = []
+    for question, context in zip(df['question'], df[context_type]):
+        system = "You are an expert in answering time related questions. Please provide consistent, brief answers in the style of 'The answer is X'."
+        prompt = f"Get answers for the question based on the context. If the time interval of when the event mentioned in the question occured in the context, the answer is the span in the context. Else output 'unanswerable':\n\n Context: {context}\n\n Question: {question}\n\n Answer:"
+        formatted_prompt  = f"<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\n{system}<|eot_id|><|start_header_id|>user<|end_header_id|>\n\n{prompt}<|eot_id|><|start_header_id|>assistant<|end_header_id|>"
+        formatted_prompts.append(formatted_prompt)
+    return formatted_prompts    
+
+def menatqa_counterfactual_llama_formatter(df: pd.DataFrame, context_type: str) -> list:
+    formatted_prompts = []
+    for question, context in zip(df['question'], df[context_type]):
+        system = "You are an expert in answering time related questions. Please provide consistent, brief answers in the style of 'The answer is X'."
+        prompt = f"Get answers for the question based on the context. If the time interval of when the event mentioned in the question occured in the context, the answer is the span in the context. Else output 'unanswerable':\n\n Context: {context}\n\n Question: {question}\n\n Answer:"
+        formatted_prompt  = f"<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\n{system}<|eot_id|><|start_header_id|>user<|end_header_id|>\n\n{prompt}<|eot_id|><|start_header_id|>assistant<|end_header_id|>"
+        formatted_prompts.append(formatted_prompt)
+    return formatted_prompts  
 
 def get_format_function(model:str) -> callable:
     # Define mappings for instruction-tuned (IT) and non-instruction-tuned (NIT) models
     format_functions = {
         'gemma': gemma_generation_formatter,
         'llama': llama_generation_formatter,
-        'mistral': mistral_generation_formatter
+        'mistral': mistral_generation_formatter,
+        "menatqa_base_llama_formatter": menatqa_base_llama_formatter
     }
     
     return format_functions.get(model)

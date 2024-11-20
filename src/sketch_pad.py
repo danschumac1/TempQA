@@ -3,7 +3,7 @@ Created on 11/02/2024
 
 @author: Dan Schumacher
 How to use:
-python sketch_pad.py
+python ./src/sketch_pad.py
 """
 
 import os

@@ -1,7 +1,7 @@
 # COMBINED GENERATION AND EVALUATION SCRIPT
 # Created on 11/01/2024
 # @author: Dan Schumacher
-
+# menatqa_base_llama_formatter
 import os
 import json
 import argparse
@@ -9,8 +9,7 @@ import pandas as pd
 import torch
 from torch.utils.data import DataLoader, TensorDataset
 from datetime import datetime
-from transformers import AutoModelForCausalLM, AutoTokenizer
-from peft import PeftModel
+from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 from utils.training_utils import load_config
 from utils.gen_utils import map_tokens_over_data, get_format_function
 from utils.eval_utils import extract_generations, extract_actual_answers, calc_contains_acc, calc_f1
@@ -28,6 +27,7 @@ def parse_args():
     parser.add_argument('--model', type=str, required=True, choices=['gemma','mistral','llama'], help='Model type')
     parser.add_argument('--config_type', type=str, required=True, help='Type of generation config')
     parser.add_argument('--splitter', type=str, default='\nmodel\n', help='Splitter for generation output')
+    parser.add_argument('--formatter', type=str, default='menatqa_base_llama_formatter', help='Prompt formatting function')
     
     # Optional arguments
     parser.add_argument('--batch_size', type=int, default=2, help='Batch size for inference')
@@ -58,16 +58,18 @@ def main():
     gen_logger("test_data loaded")
 
     # Set up prompt formatting function
-    format_function = get_format_function(args.model)
+    format_function = get_format_function(args.formatter)
     gen_logger("formatted_instructions")
     test_data[args.eval_context] = format_function(test_data, context_type=args.eval_context)
 
     gen_logger('INFO', f"Loading model from {args.model_path}")
 
-    base_model = AutoModelForCausalLM.from_pretrained(args.model_path)
-    model = PeftModel.from_pretrained(base_model, args.model_path).to('cuda')
-    tokenizer = AutoTokenizer.from_pretrained(args.model_path, add_bos_token=True, add_eos_token=False)
-    gen_logger("INFO", f"Loading Tokenizer from {args.model_path}")
+    bnb_config = BitsAndBytesConfig(load_in_8bit=False)
+    
+    train_config = load_config('./resources/trainer_config.json', args.model)
+    model = AutoModelForCausalLM.from_pretrained(train_config["base_model"], quantization_config=bnb_config, device_map="auto", torch_dtype=torch.bfloat16, use_cache=False)
+    gen_logger("INFO", f"Loading Tokenizer from {train_config['base_model']}")
+    tokenizer = AutoTokenizer.from_pretrained(train_config["base_model"], add_bos_token=False, add_eos_token=False, truncation=True, max_length=512)
 
     # Initialize tokenizer and model
     gen_logger("tokenizing data")
