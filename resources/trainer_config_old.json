@@ -1,0 +1,41 @@
+{
+    "gemma": {
+      "base_model": "google/gemma-7b-it",
+      "formatter": "gemma_IT",
+      "lora_config": {
+        "r": 16,
+        "lora_alpha": 32,
+        "target_modules": "all-linear",
+        "lora_dropout": 0.05,
+        "bias": "none",
+        "task_type": "CAUSAL_LM",
+        "modules_to_save": ["lm_head", "embed_token"]
+      }
+    },
+    "mistral": {
+      "base_model": "huggingface/MISTRAL BLAH-7b",
+      "formatter": "MISTRAL BLAH",
+      "lora_config": {
+        "r": 8,
+        "lora_alpha": 64,
+        "target_modules": ["q_proj", "k_proj", "v_proj"],
+        "lora_dropout": 0.1,
+        "bias": "none",
+        "task_type": "CAUSAL_LM"
+      }
+    },
+    "llama": {
+      "base_model": "huggingface/llama-7b",
+      "formatter": "LLAMA BLAH",
+      "lora_config": {
+        "r": 8,
+        "lora_alpha": 64,
+        "target_modules": ["q_proj", "k_proj", "v_proj"],
+        "lora_dropout": 0.1,
+        "bias": "none",
+        "task_type": "CAUSAL_LM"
+      }
+    }
+  }
+
+  

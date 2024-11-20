@@ -1,58 +1,42 @@
 #!/bin/bash
-
-## ---------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
 # To Run: nohup ./bin/eval.sh &
 # ---------------------------------------------------------------------------
-
 # Dataset parameters
-dataset="MenatQA"
-model="gemma"
+test_files=("counterfactual_test.jsonl" "order_test.jsonl" "scope_test.jsonl" "scope_expand_test.jsonl") # Change this
+dataset="MenatQA"            
+# model="mistral"                                                                            # Change this
+# splitter="[/INST]"  
+model="llama"      
+splitter=$'assistant\n' # LLAMA uses this splitter
 
-# Define the directories
-generations_dir="./data/generations/${model}/${dataset}/mixed_context_trained"
-test_dir="./data/datasets/${dataset}/final"
+# These stay the same
+dataset_folder="./data/datasets/${dataset}/final"
+training_contexts=("relevant_context-24epochs")                                                             # Change this
+eval_contexts=("relevant_context" "wrong_date_context" "random_context" "no_context")
+pre_path="./data/generations/${model}/${dataset}"
+if [ ! -f "./data/results/results.jsonl" ]; then
+    touch "./data/results/results.jsonl"
+fi
 
-# Clear or create results file
-> "./data/results/results.jsonl"
-
-# Loop over all generated .jsonl files in the generations directory
-find "${generations_dir}" -name "*.jsonl" | while read gen_path; do
-    echo "Processing file: $gen_path"
-
-    # Extract the model, dataset, and contexts from the file path
-    model=$(echo "$gen_path" | cut -d'/' -f4)  # Extract the model
-    dataset=$(echo "$gen_path" | cut -d'/' -f5)  # Extract the dataset
-
-    # Extract the trained context and evaluated context
-    trained_on=$(basename "$(dirname "$gen_path")")  # Get directory name for trained context
-    trained_on=${trained_on%_trained}  # Remove the "_trained" suffix
-
-    eval_on=$(basename "$gen_path" .jsonl)  # Get file name without extension
-    eval_on=${eval_on%_evaluated}  # Remove only the "_evaluated" suffix
-
-    # Split eval_on into eval_test_set and eval_context based on the first occurrence of "test"
-    eval_test_set="${eval_on%%_test*}_test"  # Extract everything before "_test" and include "_test"
-    eval_context="${eval_on#*_test}"  # Extract everything after "_test"
-    eval_context="${eval_context#_}"  # Remove leading underscore, if present
-
-    # Strip off the context part from eval_on (if any context like "_relevant_context", "_random_context", etc. exists)
-    eval_on_base=$(echo "$eval_on" | sed -E 's/_(relevant_context|random_context|no_context|wrong_date_context)$//')
-
-    # Map the eval_on_base to the corresponding actual test file
-    actual_test_file="${test_dir}/${eval_on_base}.jsonl"
-    if [ ! -f "$actual_test_file" ]; then
-        echo "Actual test file not found for $eval_on_base: $actual_test_file"
-        continue  # Skip this iteration if the actual test file doesn't exist
-    fi
-
-    # Run the Python evaluation script
-    python ./src/eval.py \
-        --gen_path "$gen_path" \
-        --actual_path "$actual_test_file" \
-        --model "$model" \
-        --trained_on "$trained_on" \
-        --dataset "$dataset" \
-        --eval_test_set "$eval_test_set" \
-        --eval_context "$eval_context" >> "./data/results/results.jsonl" 2>> logs/evaluation_errors.log
-
+# Run the Python evaluation script
+for test_file in "${test_files[@]}" ; do
+    actual_path="${dataset_folder}/${test_file}"
+    for eval_context in "${eval_contexts[@]}" ; do
+        for training_context in "${training_contexts[@]}" ; do
+            gen_path="${pre_path}/${training_context}_trained/${test_file%%_test*}__${eval_context}_evaluated.jsonl"
+            config_type="${dataset}_${model}_${training_context%%_context*}"
+            python src/eval.py \
+                --gen_path $gen_path \
+                --actual_path $actual_path \
+                --dataset $dataset \
+                --model $model \
+                --trained_on $training_context \
+                --test_file $test_file \
+                --eval_context $eval_context \
+                --config_type $config_type \
+                --splitter $splitter \
+                >> "./data/results/results.jsonl"
+        done
+    done
 done

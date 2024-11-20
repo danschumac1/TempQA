@@ -1,10 +1,17 @@
+"""
+Created on 11/05/2024
+
+@author: Dan Schumacher
+How to use:
+python src/preprocess_data/format_stacked_menatQA.py
+"""
 import pandas as pd
 
 def reshape_context(df: pd.DataFrame, col_list: list[str]) -> pd.DataFrame:
     mixed_df = pd.DataFrame()
 
     for col in col_list:
-        new_df = df[['question','answer', col]].copy()
+        new_df = df[['question','answers', col]].copy()
         new_df.rename(columns={col: 'mixed_context'}, inplace=True)
         mixed_df = pd.concat([mixed_df, new_df], ignore_index=True)
     
@@ -26,6 +33,10 @@ def main():
     col_list = ['relevant_context', 'random_context', 'wrong_date_context', 'no_context']
     train_mixed = reshape_context(train, col_list)
     dev_mixed = reshape_context(dev, col_list)
+
+    # Shuffle the datasets
+    train_mixed = train_mixed.sample(frac=1).reset_index(drop=True)
+    dev_mixed = dev_mixed.sample(frac=1).reset_index(drop=True)
 
     # Save the new datasets
     train_mixed.to_json("./data/datasets/MenatQA/final/train_mixed_stacked.jsonl", lines=True, orient='records')
