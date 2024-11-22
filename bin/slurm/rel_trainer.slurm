@@ -16,5 +16,4 @@ module load anaconda3
 conda activate TempQAEnv
 
 # Run the relevant context trainer script
-bash ./bin/slurm_TRL2_relevant_trainer.sh
-
+bash ./bin/rel_trainer.sh
