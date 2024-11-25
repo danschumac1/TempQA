@@ -26,7 +26,13 @@ def load_funky_json(file_path):
 def extract_generations(gen_list: List[dict], key_name:str = 'OUTPUT', splitter='\nmodel\n') -> list:
     cleaned_list = []
     for gen in gen_list:
-        cleaned_list.append(preprocess_text(gen[key_name].split(splitter)[1]))
+        split_list =gen[key_name].split(splitter)
+        if len(split_list) > 1:
+            cleaned_list.append(preprocess_text(gen[key_name].split(splitter)[1]))
+        else:
+            with open('error.txt', 'a') as f:
+                f.write(f"Splitter: {splitter} not found in: {gen[key_name]}\n")
+
     return cleaned_list
 
 def extract_actual_answers(actual_df: pd.DataFrame, answer_key: str = 'answers') -> List[List[str]]:

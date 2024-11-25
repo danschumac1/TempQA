@@ -1,0 +1,22 @@
+# DAN
+- run eval on
+    - llama trl_2
+    - the four below upon completion
+- run gen on 
+    - ~~Llama Menat Mixed~~
+    - ~~Llama TR_l2 Rel~~
+    - ~~Mistral TR_l2 Rel~~
+    - ~~Mistral TR_l2 Mixed~~
+    - base model Menat
+    - base model TR_l2
+    - gpt4o Menat
+    - gpt4o TR_l2 
+- run training on 
+    - ~~mistral rel Menat~~
+    - ~~mistral mixed Menat~~
+    - ~~mistral rel TR_l2~~ has checkpoint though?
+    - ~~mistral mixed TR_l2~~ has checkpoint though?
+    - ~~llama rel Menat~~
+    - ~~llama mixed Menat~~
+    - ~~llama rel TR_l2~~ has checkpoint though?
+    - ~~llama mixed TR_l2~~ has checkpoint though?

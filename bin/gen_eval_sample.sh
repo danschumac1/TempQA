@@ -5,9 +5,9 @@
 # Bash script to run the combined generation and evaluation Python script
 
 # CHANGE THESE
-test_file="counterfactual_test.jsonl"
-dataset="MenatQA"
-training_context="base"
+test_file="test.jsonl"
+dataset="TR_l2"
+training_context="relevant_context"
 eval_context="relevant_context"
 num_rows=20
 batch_size=4
@@ -20,8 +20,7 @@ splitter=$'assistant\n' # LLAMA uses this splitter
 
 # DON'T CHANGE THESE
 data_folder="./data/datasets/${dataset}/final"
-# model_path="models/${model_type}/${dataset}/${training_context}"
-model_path='base'
+model_path="models/${model_type}/${dataset}/${training_context}"
 
 # config_type="${dataset}_${model_type}_${training_context%%_context*}"
 config_type="MenatQA_${model_type}_${training_context%%_context*}"
@@ -38,7 +37,7 @@ CUDA_VISIBLE_DEVICES=0 python ./src/gen_eval_sample.py \
     --batch_size "$batch_size" \
     --num_rows "$num_rows" \
     --splitter "$splitter" \
-     >"dummy_${dataset}_${model}_${training_context%%_context*}_trained.jsonl"
+     >"./data/temp/dummy_${dataset}_${model}_${training_context%%_context*}_trained.jsonl"
 
 # Print completion message
 echo "Generation and evaluation completed."

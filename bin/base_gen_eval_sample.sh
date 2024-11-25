@@ -5,8 +5,8 @@
 # Bash script to run the combined generation and evaluation Python script
 
 # CHANGE THESE
-test_file="counterfactual_test.jsonl"
-dataset="MenatQA"
+test_file="test.jsonl"
+dataset="TR_l2"
 eval_context="relevant_context"
 num_rows=20
 batch_size=4
