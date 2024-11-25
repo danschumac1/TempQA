@@ -55,13 +55,22 @@ def menatqa_counterfactual_llama_formatter(df: pd.DataFrame, context_type: str) 
         formatted_prompts.append(formatted_prompt)
     return formatted_prompts  
 
+def gpt_generation_formatter(df: pd.DataFrame, context_type: str) -> list:
+    formatted_prompts = []
+    system = "You are an expert in answering time related questions. Please provide consistent, brief answers in the style of 'The answer is X'."
+    for question, context in zip(df['question'], df[context_type]):
+        prompt = f"In as few words as possible, answer the following question given the context.\nQuestion:{question}\nContext:{context}\n"
+        formatted_prompts.append(prompt)
+    return system,formatted_prompts
+
 def get_format_function(model:str) -> callable:
     # Define mappings for instruction-tuned (IT) and non-instruction-tuned (NIT) models
     format_functions = {
         'gemma': gemma_generation_formatter,
         'llama': llama_generation_formatter,
         'mistral': mistral_generation_formatter,
-        "menatqa_base_llama_formatter": menatqa_base_llama_formatter
+        "menatqa_base_llama_formatter": menatqa_base_llama_formatter,
+        "gpt": gpt_generation_formatter
     }
     
     return format_functions.get(model)
