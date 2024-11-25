@@ -1,20 +1,34 @@
 #!/bin/bash
 # ---------------------------------------------------------------------------
-# To Run: nohup ./bin/generations_simple_gpu1.sh &
+# To Run: nohup ./bin/generations_llama_trl2_rel.sh &
 # ---------------------------------------------------------------------------
-# Set the parameters
-test_files=("counterfactual_test.jsonl" "scope_test.jsonl" "scope_expand_test.jsonl" "order_test.jsonl") # for MENATQA
-# test_files=("test_easy.jsonl") # for TimeQAEasy
-# test_files=("test_hard.jsonl") # for TimeQAHard
-# test_files=("test.jsonl") # for everything else
+# DATASET PARAMETERS
+# dataset="MenatQA"                    
+# test_files=("counterfactual_test.jsonl" "scope_test.jsonl" "scope_expand_test.jsonl" "order_test.jsonl") # for MENATQA
 
-model="llama"                    # Change this
-dataset="MenatQA"                # Change this
-training_context="mixed_context" # Change this 
-batch_size=2                     # Change this
+# dataset="TimeQAEasy"
+# test_files=("test_easy.jsonl") # for TimeQAEasy and TimeQAHard
 
+# dataset="TimeQAHard"
+# test_files=("test_hard.jsonl") # for TimeQAEasy and TimeQAHard
+
+dataset="TR_l2"
+test_files=("test.jsonl") # for everything else
+
+# ---------------------------------------------------------------------------
+# MODEL PARAMETERS
+model="llama"
+# model="mistral"
+# ---------------------------------------------------------------------------
+
+# TRAINING CONTEXT
+training_context="relevant_context"    # Change this 
+# training_context="mixed_context"
+
+# ---------------------------------------------------------------------------
 # These stay the same
 dataset_folder="./data/datasets/${dataset}/final"
+batch_size=2
 eval_contexts=("relevant_context" "wrong_date_context" "random_context" "no_context")
 config_type="${dataset}_${model}_${training_context%%_context*}"
 gpu=0  
@@ -27,7 +41,7 @@ error_log="./logs/gen_${model}_${training_context}.log"
 for test_file in "${test_files[@]}"; do
     for eval_context in "${eval_contexts[@]}"; do
         # Set up the save path
-        save_path="./data/generations/${model}/${dataset}/${training_context}_trained"
+        save_path="./data/generations/${model}/${dataset}/${training_context}"
         mkdir -p "$save_path" || exit 1
 
         # set up file name (they change depending on the dataset)
@@ -51,7 +65,7 @@ for test_file in "${test_files[@]}"; do
             --dataset "$dataset" \
             --eval_context "$eval_context" \
             --config_type "$config_type" \
-            --model_path "models/${model}/${dataset}/${training_context}_trained/" \
+            --model_path "models/${model}/${dataset}/${training_context}/" \
             --batch_size="$batch_size" > "${save_path}/${file_name}" 2>> "$error_log"
         echo "Finished generation for $test_file at $(date)" >> "$error_log"
     done

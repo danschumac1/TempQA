@@ -54,5 +54,13 @@
     "top_p": 0.1,
     "repetition_penalty": 1.6,
     "penalty_alpha": 0.1
+  },
+  "TR_l2_llama_mixed": {
+    "max_new_tokens": 128,
+    "do_sample": true,
+    "temperature": 0.1,
+    "top_p": 0.1,
+    "repetition_penalty": 1.6,
+    "penalty_alpha": 0.1
   }
 }
