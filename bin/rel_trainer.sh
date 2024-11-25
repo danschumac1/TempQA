@@ -1,17 +1,17 @@
 #!/bin/bash
 # nohup ./bin/trainer/trainer_Menat.sh &
 #region RELEVANT CONTEXT
-dataset="TR_l2"
+dataset="TR_l3"
 model='llama'
 training_context='relevant_context'
 pre_path="./data/datasets/${dataset}/final"
 train_path="${pre_path}/train.jsonl"
 dev_path="${pre_path}/dev.jsonl"
 save_path="./models/${model}/${dataset}/${training_context}"
-gpu=0
+gpu=1
 
 # ensure that save_path exists
-log="logs/tp_${model}_${training_context}.log"
+log="logs/tp_${dataset}_${model}_${training_context}.log"
 touch $log
 mkdir -p $save_path
 

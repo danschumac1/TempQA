@@ -1,7 +1,7 @@
 #!/bin/bash
 # nohup ./bin/trainer/trainer_Menat.sh &
 #region MIXED CONTEXT
-dataset="TR_l2"
+dataset="TR_l3"
 model='llama'
 training_context='mixed_context'
 pre_path="./data/datasets/${dataset}/final"
