@@ -98,7 +98,7 @@ def main():
         torch.cuda.empty_cache()
 
     # Save generated responses
-    output_path = './temp_generated_responses.jsonl'
+    output_path = './data/temp/temp_generated_responses.jsonl'
     with open(output_path, 'w') as f:
         for item in generated_outputs:
             f.write(json.dumps(item) + '\n')

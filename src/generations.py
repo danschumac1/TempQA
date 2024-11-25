@@ -38,7 +38,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Temporal Understanding in LLMs Training Script")
     parser.add_argument('--dataset_folder', type=str, required=True, help='Where do the train/dev files live?')
     parser.add_argument('--test_file', type=str, required=True, help='What is the train file name?')
-    parser.add_argument('--dataset', type=str, required=True, choices=['dummy','AQA','TQE', 'MenatQA','TimeQAEasy', 'TimeQAHard','TempReason'], help='Select the dataset to use')
+    parser.add_argument('--dataset', type=str, required=True, help='Select the dataset to use')
     parser.add_argument('--eval_context', type=str, required=True, choices=['no_context','random_context','relevant_context','wrong_date_context','mixed_context'], help='Select context to evaluate')
     parser.add_argument('--model_path', type=str, required=True, help='Path to the saved model')
     parser.add_argument('--model', type=str, required=True, choices=['gemma','mistral','llama'], help='What model (for grabbing generation configs)')

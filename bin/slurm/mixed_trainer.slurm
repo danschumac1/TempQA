@@ -2,7 +2,7 @@
 #SBATCH -J mixed_training            # Job name
 #SBATCH -o ./logs/mixed_training_%j.out  # Standard output file
 #SBATCH -e ./logs/mixed_training_%j.err  # Standard error file
-#SBATCH -p gpu1v100                  # Partition name
+#SBATCH -p amdgpu                    # Partition name
 #SBATCH -N 1                         # Number of nodes
 #SBATCH -n 1                         # Number of tasks
 #SBATCH --time=72:00:00              # Time limit
@@ -16,4 +16,4 @@ module load anaconda3
 conda activate TempQAEnv
 
 # Run the mixed context trainer script
-bash ./bin/slurm_TRL2_mixed_trainer.sh
+bash ./bin/mixed_trainer.sh

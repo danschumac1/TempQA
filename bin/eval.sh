@@ -2,17 +2,30 @@
 # ---------------------------------------------------------------------------
 # To Run: nohup ./bin/eval.sh &
 # ---------------------------------------------------------------------------
-# Dataset parameters
-test_files=("counterfactual_test.jsonl" "order_test.jsonl" "scope_test.jsonl" "scope_expand_test.jsonl") # Change this
+# DATASET PARAMETERS
 dataset="MenatQA"            
-# model="mistral"                                                                            # Change this
-# splitter="[/INST]"  
+test_files=("counterfactual_test.jsonl" "order_test.jsonl" "scope_test.jsonl" "scope_expand_test.jsonl") # Change this
+
+# dataset="TR_l2"
+# test_files=("test.jsonl")
+
+# dataset="TimeQAEasy"
+# test_files=("test_easy.jsonl")
+
+# dataset="TimeQAHard"
+# test_files=("test_hard.jsonl")
+# ---------------------------------------------------------------------------
+
+# MODEL PARAMETERS
 model="llama"      
 splitter=$'assistant\n' # LLAMA uses this splitter
 
+# model="mistral"                                                                            # Change this
+# splitter="[/INST]"  
+# ---------------------------------------------------------------------------
 # These stay the same
+training_contexts=("relevant_context" "mixed_context")                                                   
 dataset_folder="./data/datasets/${dataset}/final"
-training_contexts=("relevant_context-24epochs")                                                             # Change this
 eval_contexts=("relevant_context" "wrong_date_context" "random_context" "no_context")
 pre_path="./data/generations/${model}/${dataset}"
 if [ ! -f "./data/results/results.jsonl" ]; then

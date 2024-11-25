@@ -1,8 +1,8 @@
 #!/bin/bash
 # nohup ./bin/trainer/trainer_Menat.sh &
 #region RELEVANT CONTEXT
-dataset="TR_l3"
-model='llama'
+dataset="TR_l2"
+model='mistral'
 training_context='relevant_context'
 pre_path="./data/datasets/${dataset}/final"
 train_path="${pre_path}/train.jsonl"
