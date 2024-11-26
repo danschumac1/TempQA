@@ -1,8 +1,6 @@
 """
 Created on 06/09/2024
-
 @author: Dan Schumacher
-
 HOW TO RUN
 python ./src/generations.py \
     --dataset_folder './data/datasets/MenatQA/final' \

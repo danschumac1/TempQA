@@ -17,3 +17,4 @@ dummy_eval.jsonl
 dummy_generations.jsonl
 nohup.out
 output/*
+.env
