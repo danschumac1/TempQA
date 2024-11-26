@@ -21,3 +21,5 @@ dummy_generations.jsonl
 nohup.out
 output/*
 .env
+.tempqa_venv/
+dataOLD/
