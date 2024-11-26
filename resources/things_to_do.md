@@ -14,6 +14,7 @@
     - ~~gpt4o TQAHard~~
     - ~~gpt4o TR_l2~~
     - ~~gpt4o TR_l3~~
+
 - run training on 
     - ~~mistral rel Menat~~
     - ~~mistral mixed Menat~~
