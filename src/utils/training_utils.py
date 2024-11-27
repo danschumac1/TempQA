@@ -71,61 +71,6 @@ def load_config(json_path, config_type):
     with open(json_path, 'r') as file:
         config = json.load(file)
     return config[config_type]
-    
-def get_trainer_old(model, tokenizer, train_dataset, dev_dataset, config, epoch, lr, batch_size, save_path):
-    """
-    Set up and return the SFTTrainer based on the provided configuration.
-
-    Args:
-        model: The pre-trained model.
-        tokenizer: The tokenizer associated with the model.
-        train_dataset: The training dataset.
-        dev_dataset: The validation dataset.
-        config (dict): The configuration dictionary loaded from the JSON file.
-
-    Returns:
-        SFTTrainer: A trainer object configured for fine-tuning the model.
-    """
-    # Load the LoRA configuration from the config dictionary
-    lora_config = LoraConfig(
-        **config["lora_config"]
-    )
-    
-    # Set up the trainer using the provided configuration
-    trainer = SFTTrainer(
-        model=model,
-        train_dataset=train_dataset,
-        eval_dataset=dev_dataset,
-        dataset_text_field="prompt",
-        peft_config=lora_config,
-        packing=True,
-        args=TrainingArguments(
-            run_name=f'{config["base_model"]}-trained',
-            num_train_epochs=epoch,
-            per_device_train_batch_size=batch_size,
-            per_device_eval_batch_size=batch_size,
-            eval_accumulation_steps=1,
-            gradient_accumulation_steps=8,
-            warmup_steps=1,
-            gradient_checkpointing=True,
-            fp16=True,
-            optim="paged_adamw_8bit",
-            learning_rate=lr,
-            logging_steps=25,
-            eval_steps=500,                     # Evaluate every 500 steps, or you can use 'epoch' for evaluation every epoch
-            output_dir=save_path,
-            save_strategy="epoch",              # Evaluate at each epoch
-            evaluation_strategy="epoch",        # Evaluate at the end of every epoch
-            save_total_limit=1,                 # Only keep 1 best model to avoid clutter
-            load_best_model_at_end=True,        # Load the best model at the end
-            metric_for_best_model="eval_loss",  # Save based on evaluation loss
-            greater_is_better=False,            # We want to minimize the loss
-            report_to="wandb"                   # Report to Weights and Biases
-        ),
-        max_seq_length=512,
-        data_collator=transformers.DataCollatorForLanguageModeling(tokenizer, mlm=False)
-    )
-    return trainer
 
 def get_trainer(
         model: str, tokenizer:AutoTokenizer, train_dataset: Dataset, 
@@ -179,3 +124,58 @@ def save_model_and_tokenizer(trainer, save_path):
     # Optionally, save the training arguments (useful for reproducibility)
     with open(os.path.join(save_path, "training_args.json"), "w") as f:
         f.write(trainer.args.to_json_string())
+
+# def get_trainer_old(model, tokenizer, train_dataset, dev_dataset, config, epoch, lr, batch_size, save_path):
+#     """
+#     Set up and return the SFTTrainer based on the provided configuration.
+
+#     Args:
+#         model: The pre-trained model.
+#         tokenizer: The tokenizer associated with the model.
+#         train_dataset: The training dataset.
+#         dev_dataset: The validation dataset.
+#         config (dict): The configuration dictionary loaded from the JSON file.
+
+#     Returns:
+#         SFTTrainer: A trainer object configured for fine-tuning the model.
+#     """
+#     # Load the LoRA configuration from the config dictionary
+#     lora_config = LoraConfig(
+#         **config["lora_config"]
+#     )
+    
+#     # Set up the trainer using the provided configuration
+#     trainer = SFTTrainer(
+#         model=model,
+#         train_dataset=train_dataset,
+#         eval_dataset=dev_dataset,
+#         dataset_text_field="prompt",
+#         peft_config=lora_config,
+#         packing=True,
+#         args=TrainingArguments(
+#             run_name=f'{config["base_model"]}-trained',
+#             num_train_epochs=epoch,
+#             per_device_train_batch_size=batch_size,
+#             per_device_eval_batch_size=batch_size,
+#             eval_accumulation_steps=1,
+#             gradient_accumulation_steps=8,
+#             warmup_steps=1,
+#             gradient_checkpointing=True,
+#             fp16=True,
+#             optim="paged_adamw_8bit",
+#             learning_rate=lr,
+#             logging_steps=25,
+#             eval_steps=500,                     # Evaluate every 500 steps, or you can use 'epoch' for evaluation every epoch
+#             output_dir=save_path,
+#             save_strategy="epoch",              # Evaluate at each epoch
+#             evaluation_strategy="epoch",        # Evaluate at the end of every epoch
+#             save_total_limit=1,                 # Only keep 1 best model to avoid clutter
+#             load_best_model_at_end=True,        # Load the best model at the end
+#             metric_for_best_model="eval_loss",  # Save based on evaluation loss
+#             greater_is_better=False,            # We want to minimize the loss
+#             report_to="wandb"                   # Report to Weights and Biases
+#         ),
+#         max_seq_length=512,
+#         data_collator=transformers.DataCollatorForLanguageModeling(tokenizer, mlm=False)
+#     )
+#     return trainer
