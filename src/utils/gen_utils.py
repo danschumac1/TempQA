@@ -3,30 +3,75 @@ import pandas as pd
 from datasets import Dataset
 from transformers import PreTrainedTokenizer
 import random
+from transformers import AutoTokenizer
 
-def gemma_generation_formatter(df: pd.DataFrame, context_type: str) -> list:
+
+def gemma_generation_formatter(df: pd.DataFrame, context_type: str, tokenizer: AutoTokenizer, max_length: int) -> list:
     prompts = []
-    # Iterate over the DataFrame rows
     for question, context in zip(df['question'], df[context_type]):
-        prompt = f'''<bos><start_of_turn>user\nIn as few words as possible, answer the following question given the context.\nQuestion: {question}\nContext: {context}<end_of_turn>\n<start_of_turn>model\n'''
+        # Static parts of the prompt
+        p1 = f"<bos><start_of_turn>user\nIn as few words as possible, answer the following question given the context.\nQuestion: {question}\nContext: "
+        p2 = f"<end_of_turn>\n<start_of_turn>model\n"
+        
+        # Tokenize static parts and calculate remaining length for the context
+        tokenized_static_parts = tokenizer(p1 + p2, truncation=False)
+        remaining_length = max_length - len(tokenized_static_parts["input_ids"])
+        
+        # Truncate context to fit within the remaining length
+        tokenized_context = tokenizer(context, truncation=True, max_length=remaining_length)
+        truncated_context = tokenizer.decode(tokenized_context["input_ids"], skip_special_tokens=True)
+        
+        # Reassemble prompt with truncated context
+        prompt = f"{p1}{truncated_context}{p2}"
         prompts.append(prompt)
+    
     return prompts
 
-def llama_generation_formatter(df: pd.DataFrame, context_type: str) -> list:
+def llama_generation_formatter(df: pd.DataFrame, context_type: str, tokenizer: AutoTokenizer, max_length: int) -> list:
     formatted_prompts = []
     for question, context in zip(df['question'], df[context_type]):
+        # Static parts of the prompt
         system = "You are an expert in answering time related questions. Please provide consistent, brief answers in the style of 'The answer is X'."
-        prompt = f"In as few words as possible, answer the following question given the context.\nQuestion: {question}\nContext: {context}"
-        formatted_prompt  = f"<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\n{system}<|eot_id|><|start_header_id|>user<|end_header_id|>\n\n{prompt}<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n"
+        p1 = f"<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\n{system}<|eot_id|><|start_header_id|>user<|end_header_id|>\n\n"
+        p2 = f"In as few words as possible, answer the following question given the context.\nQuestion: {question}\nContext: "
+        p3 = f"<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n"
+        
+        # Tokenize static parts and calculate remaining length for the context
+        tokenized_static_parts = tokenizer(p1 + p2 + p3, truncation=False)
+        remaining_length = max_length - len(tokenized_static_parts["input_ids"])
+        
+        # Truncate context to fit within the remaining length
+        tokenized_context = tokenizer(context, truncation=True, max_length=remaining_length)
+        truncated_context = tokenizer.decode(tokenized_context["input_ids"], skip_special_tokens=True)
+        
+        # Reassemble prompt with truncated context
+        formatted_prompt = f"{p1}{p2}{truncated_context}{p3}"
         formatted_prompts.append(formatted_prompt)
+    
     return formatted_prompts
 
-def mistral_generation_formatter(df: pd.DataFrame, context_type: str) -> list:
+def mistral_generation_formatter(df: pd.DataFrame, context_type: str, tokenizer: AutoTokenizer, max_length: int) -> list:
     prompts = []
     for question, context in zip(df['question'], df[context_type]):
-        prompt = f'''<s>[INST] In as few words as possible, answer the following question given the context.\nQuestion:{question}\nContext:{context}[/INST]\n'''
+        # Static parts of the prompt
+        p1 = f"<s>[INST] In as few words as possible, answer the following question given the context.\nQuestion:{question}\nContext:"
+        p2 = f"[/INST]\n"
+        
+        # Tokenize static parts and calculate remaining length for the context
+        tokenized_static_parts = tokenizer(p1 + p2, truncation=False)
+        remaining_length = max_length - len(tokenized_static_parts["input_ids"])
+        
+        # Truncate context to fit within the remaining length
+        tokenized_context = tokenizer(context, truncation=True, max_length=remaining_length)
+        truncated_context = tokenizer.decode(tokenized_context["input_ids"], skip_special_tokens=True).strip()
+        
+        # Reassemble prompt with truncated context
+        prompt = f"{p1}{truncated_context}{p2}"
         prompts.append(prompt)
+    
     return prompts
+
+
 
 def menatqa_base_llama_formatter(df: pd.DataFrame, context_type: str) -> list:
     formatted_prompts = []
@@ -37,23 +82,23 @@ def menatqa_base_llama_formatter(df: pd.DataFrame, context_type: str) -> list:
         formatted_prompts.append(formatted_prompt)
     return formatted_prompts
 
-def menatqa_scope_llama_formatter(df: pd.DataFrame, context_type: str) -> list:
-    formatted_prompts = []
-    for question, context in zip(df['question'], df[context_type]):
-        system = "You are an expert in answering time related questions. Please provide consistent, brief answers in the style of 'The answer is X'."
-        prompt = f"Get answers for the question based on the context. If the time interval of when the event mentioned in the question occured in the context, the answer is the span in the context. Else output 'unanswerable':\n\n Context: {context}\n\n Question: {question}\n\n Answer:"
-        formatted_prompt  = f"<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\n{system}<|eot_id|><|start_header_id|>user<|end_header_id|>\n\n{prompt}<|eot_id|><|start_header_id|>assistant<|end_header_id|>"
-        formatted_prompts.append(formatted_prompt)
-    return formatted_prompts    
+# def menatqa_scope_llama_formatter(df: pd.DataFrame, context_type: str) -> list:
+#     formatted_prompts = []
+#     for question, context in zip(df['question'], df[context_type]):
+#         system = "You are an expert in answering time related questions. Please provide consistent, brief answers in the style of 'The answer is X'."
+#         prompt = f"Get answers for the question based on the context. If the time interval of when the event mentioned in the question occured in the context, the answer is the span in the context. Else output 'unanswerable':\n\n Context: {context}\n\n Question: {question}\n\n Answer:"
+#         formatted_prompt  = f"<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\n{system}<|eot_id|><|start_header_id|>user<|end_header_id|>\n\n{prompt}<|eot_id|><|start_header_id|>assistant<|end_header_id|>"
+#         formatted_prompts.append(formatted_prompt)
+#     return formatted_prompts    
 
-def menatqa_counterfactual_llama_formatter(df: pd.DataFrame, context_type: str) -> list:
-    formatted_prompts = []
-    for question, context in zip(df['question'], df[context_type]):
-        system = "You are an expert in answering time related questions. Please provide consistent, brief answers in the style of 'The answer is X'."
-        prompt = f"Get answers for the question based on the context. If the time interval of when the event mentioned in the question occured in the context, the answer is the span in the context. Else output 'unanswerable':\n\n Context: {context}\n\n Question: {question}\n\n Answer:"
-        formatted_prompt  = f"<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\n{system}<|eot_id|><|start_header_id|>user<|end_header_id|>\n\n{prompt}<|eot_id|><|start_header_id|>assistant<|end_header_id|>"
-        formatted_prompts.append(formatted_prompt)
-    return formatted_prompts  
+# def menatqa_counterfactual_llama_formatter(df: pd.DataFrame, context_type: str) -> list:
+#     formatted_prompts = []
+#     for question, context in zip(df['question'], df[context_type]):
+#         system = "You are an expert in answering time related questions. Please provide consistent, brief answers in the style of 'The answer is X'."
+#         prompt = f"Get answers for the question based on the context. If the time interval of when the event mentioned in the question occured in the context, the answer is the span in the context. Else output 'unanswerable':\n\n Context: {context}\n\n Question: {question}\n\n Answer:"
+#         formatted_prompt  = f"<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\n{system}<|eot_id|><|start_header_id|>user<|end_header_id|>\n\n{prompt}<|eot_id|><|start_header_id|>assistant<|end_header_id|>"
+#         formatted_prompts.append(formatted_prompt)
+#     return formatted_prompts  
 
 def gpt_generation_formatter(df: pd.DataFrame, context_type: str) -> list:
     formatted_prompts = []
@@ -132,3 +177,30 @@ def preprocess_text(text:str) -> str:
     """
     text = ' '.join(re.findall(r"\w+", text.lower()))
     return text 
+
+
+
+
+# def gemma_generation_formatter(df: pd.DataFrame, context_type: str) -> list:
+#     prompts = []
+#     # Iterate over the DataFrame rows
+#     for question, context in zip(df['question'], df[context_type]):
+#         prompt = f'''<bos><start_of_turn>user\nIn as few words as possible, answer the following question given the context.\nQuestion: {question}\nContext: {context}<end_of_turn>\n<start_of_turn>model\n'''
+#         prompts.append(prompt)
+#     return prompts
+
+# def llama_generation_formatter(df: pd.DataFrame, context_type: str) -> list:
+#     formatted_prompts = []
+#     for question, context in zip(df['question'], df[context_type]):
+#         system = "You are an expert in answering time related questions. Please provide consistent, brief answers in the style of 'The answer is X'."
+#         prompt = f"In as few words as possible, answer the following question given the context.\nQuestion: {question}\nContext: {context}"
+#         formatted_prompt  = f"<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\n{system}<|eot_id|><|start_header_id|>user<|end_header_id|>\n\n{prompt}<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n"
+#         formatted_prompts.append(formatted_prompt)
+#     return formatted_prompts
+
+# def mistral_generation_formatter(df: pd.DataFrame, context_type: str) -> list:
+#     prompts = []
+#     for question, context in zip(df['question'], df[context_type]):
+#         prompt = f'''<s>[INST] In as few words as possible, answer the following question given the context.\nQuestion:{question}\nContext:{context}[/INST]\n'''
+#         prompts.append(prompt)
+#     return prompts
