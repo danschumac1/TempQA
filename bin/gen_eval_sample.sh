@@ -4,21 +4,31 @@
 # ----------------------------------------------------------
 # Bash script to run the combined generation and evaluation Python script
 
-# CHANGE THESE
-test_file="test.jsonl"
+# DATASET PARAMS
 dataset="TR_l2"
+test_file="test.jsonl"
+
+dataset="MenatQA"
+test_file="test.jsonl"
+
+dataset="TR_l2"
+test_file="test.jsonl"
+
+# ----------------------------------------------------------
+# MODEL PARAMS
 training_context="relevant_context"
-eval_context="relevant_context"
-num_rows=20
-batch_size=4
 model_type="llama"
 splitter=$'assistant\n' # LLAMA uses this splitter
 # model_type="mistral"
 # splitter="[/INST]" # Mistral uses this splitter
 # model_type="gemma"
 # splitter=$'\nmodel\n' # Gemma uses this splitter
+# ----------------------------------------------------------
 
 # DON'T CHANGE THESE
+eval_context="relevant_context"
+num_rows=20
+batch_size=2
 data_folder="./data/datasets/${dataset}/final"
 model_path="models/${model_type}/${dataset}/${training_context}"
 

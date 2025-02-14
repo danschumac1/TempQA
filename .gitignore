@@ -1,9 +1,12 @@
+
 token.txt
 models/*
 !models/.gitkeep
 drive_credentials.json
 drive_token.json
 data/datasets/*
+data/results/*
+data/temp/*
 !data/datasets/.gitkeep
 data/generations/*
 !data/generations/.gitkeep
@@ -18,3 +21,5 @@ dummy_generations.jsonl
 nohup.out
 output/*
 .env
+.tempqa_venv/
+dataOLD/
