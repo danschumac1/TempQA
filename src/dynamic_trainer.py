@@ -90,8 +90,16 @@ def main():
     gen_logger('Instruction formatter set up', log_file=log_file)
 
     # CREATE PROMPTS
-    train_df[args.training_context] = format_instruction(train_df, context_type=args.training_context)
-    dev_df[args.training_context] = format_instruction(dev_df, context_type=args.training_context)
+    train_df[args.training_context] = format_instruction(
+        train_df,
+         context_type=args.training_context,
+         tokenizer=tokenizer,
+         max_length=1024)
+    dev_df[args.training_context] = format_instruction(
+        dev_df,
+         context_type=args.training_context,
+         tokenizer=tokenizer,
+         max_length=1024)
     gen_logger('Prompts created successfully', log_file=log_file)
 
     train_Dataset = make_tokenized_prompt_column(train_df, tokenizer, args.training_context)

@@ -1,12 +1,13 @@
 #!/bin/bash
 # ---------------------------------------------------------------------------
-# To Run: nohup ./bin/generations_simple_gpu1.sh &
+# To Run: nohup ./bin/generations_mixed.sh &
 # ---------------------------------------------------------------------------
 # Set the parameters
-dataset="MenatQA"                   
-test_files=("counterfactual_test.jsonl" "scope_test.jsonl" "scope_expand_test.jsonl" "order_test.jsonl") # for MENATQA
+# dataset="MenatQA"                   
+# test_files=("counterfactual_test.jsonl" "scope_test.jsonl" "scope_expand_test.jsonl" "order_test.jsonl") # for MENATQA
 # test_files=("test_easy.jsonl") # for TimeQAEasy and TimeQAHard
-# test_files=("test.jsonl") # for everything else
+dataset="TR_l3"
+test_files=("test.jsonl") # for everything else
 
 model="mistral"                       # Change this
 training_context="mixed_context"    # Change this 
@@ -16,7 +17,7 @@ batch_size=2                        # Change this
 dataset_folder="./data/datasets/${dataset}/final"
 eval_contexts=("relevant_context" "wrong_date_context" "random_context" "no_context")
 config_type="${dataset}_${model}_${training_context%%_context*}"
-gpu=0  
+gpu=1
 
 # Create / clear error log
 error_log="./logs/gen_${model}_${training_context}.log"
