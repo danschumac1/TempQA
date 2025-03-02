@@ -1,0 +1,121 @@
+Running fine-tune for version relevant_instructions...
+/home/dan/TemporalQA/./fatemehs_code/llama3/fine-tuning.py:5: UserWarning: WARNING: Unsloth should be imported before trl, transformers, peft to ensure all optimizations are applied. Your code may run slower or encounter memory issues without these optimizations.
+
+Please restructure your imports with 'import unsloth' at the top of your file.
+  from unsloth import FastLanguageModel
+🦥 Unsloth: Will patch your computer to enable 2x faster free finetuning.
+Unsloth: If you want to finetune Gemma 2, upgrade flash-attn to version 2.6.3 or higher!
+Newer versions support faster and less memory usage kernels for Gemma 2's attention softcapping!
+To update flash-attn, do the below:
+
+pip install --no-deps --upgrade "flash-attn>=2.6.3"
+🦥 Unsloth Zoo will now patch everything to make training faster!
+Traceback (most recent call last):
+  File "/home/dan/TemporalQA/./fatemehs_code/llama3/fine-tuning.py", line 5, in <module>
+    from unsloth import FastLanguageModel
+  File "/home/dan/miniconda3/envs/danEnv/lib/python3.11/site-packages/unsloth/__init__.py", line 214, in <module>
+    from .models import *
+  File "/home/dan/miniconda3/envs/danEnv/lib/python3.11/site-packages/unsloth/models/__init__.py", line 16, in <module>
+    from .granite import FastGraniteModel
+  File "/home/dan/miniconda3/envs/danEnv/lib/python3.11/site-packages/unsloth/models/granite.py", line 15, in <module>
+    from .llama import *
+  File "/home/dan/miniconda3/envs/danEnv/lib/python3.11/site-packages/unsloth/models/llama.py", line 65, in <module>
+    from ..save import patch_saving_functions
+  File "/home/dan/miniconda3/envs/danEnv/lib/python3.11/site-packages/unsloth/save.py", line 2113, in <module>
+    from unsloth_zoo.saving_utils import merge_and_overwrite_lora
+  File "/home/dan/miniconda3/envs/danEnv/lib/python3.11/site-packages/unsloth_zoo/saving_utils.py", line 179, in <module>
+    from peft.utils.integrations import dequantize_module_weight
+ImportError: cannot import name 'dequantize_module_weight' from 'peft.utils.integrations' (/home/dan/miniconda3/envs/danEnv/lib/python3.11/site-packages/peft/utils/integrations.py)
+Finished running fine-tune for version relevant_instructions
+Running fine-tune for version wrong_date_instructions...
+/home/dan/TemporalQA/./fatemehs_code/llama3/fine-tuning.py:5: UserWarning: WARNING: Unsloth should be imported before trl, transformers, peft to ensure all optimizations are applied. Your code may run slower or encounter memory issues without these optimizations.
+
+Please restructure your imports with 'import unsloth' at the top of your file.
+  from unsloth import FastLanguageModel
+🦥 Unsloth: Will patch your computer to enable 2x faster free finetuning.
+Unsloth: If you want to finetune Gemma 2, upgrade flash-attn to version 2.6.3 or higher!
+Newer versions support faster and less memory usage kernels for Gemma 2's attention softcapping!
+To update flash-attn, do the below:
+
+pip install --no-deps --upgrade "flash-attn>=2.6.3"
+🦥 Unsloth Zoo will now patch everything to make training faster!
+Traceback (most recent call last):
+  File "/home/dan/TemporalQA/./fatemehs_code/llama3/fine-tuning.py", line 5, in <module>
+    from unsloth import FastLanguageModel
+  File "/home/dan/miniconda3/envs/danEnv/lib/python3.11/site-packages/unsloth/__init__.py", line 214, in <module>
+    from .models import *
+  File "/home/dan/miniconda3/envs/danEnv/lib/python3.11/site-packages/unsloth/models/__init__.py", line 16, in <module>
+    from .granite import FastGraniteModel
+  File "/home/dan/miniconda3/envs/danEnv/lib/python3.11/site-packages/unsloth/models/granite.py", line 15, in <module>
+    from .llama import *
+  File "/home/dan/miniconda3/envs/danEnv/lib/python3.11/site-packages/unsloth/models/llama.py", line 65, in <module>
+    from ..save import patch_saving_functions
+  File "/home/dan/miniconda3/envs/danEnv/lib/python3.11/site-packages/unsloth/save.py", line 2113, in <module>
+    from unsloth_zoo.saving_utils import merge_and_overwrite_lora
+  File "/home/dan/miniconda3/envs/danEnv/lib/python3.11/site-packages/unsloth_zoo/saving_utils.py", line 179, in <module>
+    from peft.utils.integrations import dequantize_module_weight
+ImportError: cannot import name 'dequantize_module_weight' from 'peft.utils.integrations' (/home/dan/miniconda3/envs/danEnv/lib/python3.11/site-packages/peft/utils/integrations.py)
+Finished running fine-tune for version wrong_date_instructions
+Running fine-tune for version random_instructions...
+/home/dan/TemporalQA/./fatemehs_code/llama3/fine-tuning.py:5: UserWarning: WARNING: Unsloth should be imported before trl, transformers, peft to ensure all optimizations are applied. Your code may run slower or encounter memory issues without these optimizations.
+
+Please restructure your imports with 'import unsloth' at the top of your file.
+  from unsloth import FastLanguageModel
+🦥 Unsloth: Will patch your computer to enable 2x faster free finetuning.
+Unsloth: If you want to finetune Gemma 2, upgrade flash-attn to version 2.6.3 or higher!
+Newer versions support faster and less memory usage kernels for Gemma 2's attention softcapping!
+To update flash-attn, do the below:
+
+pip install --no-deps --upgrade "flash-attn>=2.6.3"
+🦥 Unsloth Zoo will now patch everything to make training faster!
+Traceback (most recent call last):
+  File "/home/dan/TemporalQA/./fatemehs_code/llama3/fine-tuning.py", line 5, in <module>
+    from unsloth import FastLanguageModel
+  File "/home/dan/miniconda3/envs/danEnv/lib/python3.11/site-packages/unsloth/__init__.py", line 214, in <module>
+    from .models import *
+  File "/home/dan/miniconda3/envs/danEnv/lib/python3.11/site-packages/unsloth/models/__init__.py", line 16, in <module>
+    from .granite import FastGraniteModel
+  File "/home/dan/miniconda3/envs/danEnv/lib/python3.11/site-packages/unsloth/models/granite.py", line 15, in <module>
+    from .llama import *
+  File "/home/dan/miniconda3/envs/danEnv/lib/python3.11/site-packages/unsloth/models/llama.py", line 65, in <module>
+    from ..save import patch_saving_functions
+  File "/home/dan/miniconda3/envs/danEnv/lib/python3.11/site-packages/unsloth/save.py", line 2113, in <module>
+    from unsloth_zoo.saving_utils import merge_and_overwrite_lora
+  File "/home/dan/miniconda3/envs/danEnv/lib/python3.11/site-packages/unsloth_zoo/saving_utils.py", line 179, in <module>
+    from peft.utils.integrations import dequantize_module_weight
+ImportError: cannot import name 'dequantize_module_weight' from 'peft.utils.integrations' (/home/dan/miniconda3/envs/danEnv/lib/python3.11/site-packages/peft/utils/integrations.py)
+Finished running fine-tune for version random_instructions
+Running fine-tune for version no_context_instructions...
+/home/dan/TemporalQA/./fatemehs_code/llama3/fine-tuning.py:5: UserWarning: WARNING: Unsloth should be imported before trl, transformers, peft to ensure all optimizations are applied. Your code may run slower or encounter memory issues without these optimizations.
+
+Please restructure your imports with 'import unsloth' at the top of your file.
+  from unsloth import FastLanguageModel
+🦥 Unsloth: Will patch your computer to enable 2x faster free finetuning.
+Unsloth: If you want to finetune Gemma 2, upgrade flash-attn to version 2.6.3 or higher!
+Newer versions support faster and less memory usage kernels for Gemma 2's attention softcapping!
+To update flash-attn, do the below:
+
+pip install --no-deps --upgrade "flash-attn>=2.6.3"
+🦥 Unsloth Zoo will now patch everything to make training faster!
+Traceback (most recent call last):
+  File "/home/dan/TemporalQA/./fatemehs_code/llama3/fine-tuning.py", line 5, in <module>
+    from unsloth import FastLanguageModel
+  File "/home/dan/miniconda3/envs/danEnv/lib/python3.11/site-packages/unsloth/__init__.py", line 214, in <module>
+    from .models import *
+  File "/home/dan/miniconda3/envs/danEnv/lib/python3.11/site-packages/unsloth/models/__init__.py", line 16, in <module>
+    from .granite import FastGraniteModel
+  File "/home/dan/miniconda3/envs/danEnv/lib/python3.11/site-packages/unsloth/models/granite.py", line 15, in <module>
+    from .llama import *
+  File "/home/dan/miniconda3/envs/danEnv/lib/python3.11/site-packages/unsloth/models/llama.py", line 65, in <module>
+    from ..save import patch_saving_functions
+  File "/home/dan/miniconda3/envs/danEnv/lib/python3.11/site-packages/unsloth/save.py", line 2113, in <module>
+    from unsloth_zoo.saving_utils import merge_and_overwrite_lora
+  File "/home/dan/miniconda3/envs/danEnv/lib/python3.11/site-packages/unsloth_zoo/saving_utils.py", line 179, in <module>
+    from peft.utils.integrations import dequantize_module_weight
+ImportError: cannot import name 'dequantize_module_weight' from 'peft.utils.integrations' (/home/dan/miniconda3/envs/danEnv/lib/python3.11/site-packages/peft/utils/integrations.py)
+Finished running fine-tune for version no_context_instructions
+Running fine-tune for version combined_instructions...
+/home/dan/TemporalQA/./fatemehs_code/llama3/fine-tuning.py:5: UserWarning: WARNING: Unsloth should be imported before trl, transformers, peft to ensure all optimizations are applied. Your code may run slower or encounter memory issues without these optimizations.
+
+Please restructure your imports with 'import unsloth' at the top of your file.
+  from unsloth import FastLanguageModel
